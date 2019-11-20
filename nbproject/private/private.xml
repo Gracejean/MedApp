@@ -3,9 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="irish">
-            <file>file:/C:/Users/2ndyrGroupB/Downloads/MedApp/src/medapp/MedApp.java</file>
-            <file>file:/C:/Users/2ndyrGroupB/Downloads/MedApp/src/medapp/Botica.java</file>
-            <file>file:/C:/Users/2ndyrGroupB/Downloads/MedApp/src/medapp/Pharmacist.java</file>
+            <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/medapp/Allergy.java</file>
+            <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/medapp/Cough.java</file>
+            <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/medapp/BodyPain.java</file>
+            <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/medapp/Botica.java</file>
+            <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/medapp/Login.java</file>
+            <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/medapp/Headache.java</file>
+            <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/medapp/Register.java</file>
+            <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/medapp/MedApp.java</file>
+            <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/medapp/Pharmacist.java</file>
         </group>
     </open-files>
 </project-private>
