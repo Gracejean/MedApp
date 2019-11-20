@@ -136,8 +136,7 @@ public class Pharmacist extends JFrame {
 
         public void actionPerformed(ActionEvent e) {
             if (cough.isSelected()) {
-                Cough c = new Cough();
-                Table t = c.new Table();
+                CoughMed t = new CoughMed();
                 t.setVisible(true);
                 dispose();
             } else if (headache.isSelected()) {
@@ -278,7 +277,7 @@ public class Pharmacist extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            if (cough.isSelected()) {   
+            if (cough.isSelected()) {
 
                 JOptionPane.showMessageDialog(this, "Ta");
             } else if (headache.isSelected()) {
