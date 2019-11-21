@@ -2,6 +2,10 @@ package medapp;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -9,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
 
 public class Register extends JFrame {
 
@@ -59,8 +64,18 @@ public class Register extends JFrame {
             public void actionPerformed(ActionEvent ae) {
                 String uname = userin.getText();
                 String uage = useage.getText();
-                String paswd = passwordin.getText();
-                String cpaswd = cpassword.getText();
+                String paswd = String.valueOf(passwordin.getPassword());
+                String cpaswd = String.valueOf(cpassword.getPassword());
+                
+                PreparedStatement st;
+                String query = "INSERT INTO 'the_app_users'('u_uname', 'u_uage', 'u_paswd', 'u_cpaswd') VALUES (?,?,?,?) ";
+                
+                try{
+                    st = MyConnection..prepareStatement(query);
+                }catch(SQLException ex){
+                    Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
                 if (uname == null && uage == null && paswd == null && cpaswd == null) {
                     JOptionPane.showMessageDialog(null, "Please complete!!");
                     cpassword.setText("");
