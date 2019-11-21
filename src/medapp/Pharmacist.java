@@ -1,13 +1,7 @@
 package medapp;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
-import medapp.Allergy.AllergyAdd;
-import medapp.BodyPain.BodyAdd;
-import medapp.Cough.CoughAdd;
-import medapp.Cough.Table;
-import medapp.Headache.HeadAdd;
 
 public class Pharmacist extends JFrame {
 
@@ -140,18 +134,15 @@ public class Pharmacist extends JFrame {
                 t.setVisible(true);
                 dispose();
             } else if (headache.isSelected()) {
-                Headache h = new Headache();
-                HeadAdd hadd = h.new HeadAdd();
+                HeadacheMed hadd = new HeadacheMed();
                 hadd.setVisible(true);
                 dispose();
             } else if (bodypain.isSelected()) {
-                BodyPain b = new BodyPain();
-                BodyAdd badd = b.new BodyAdd();
+                BodyPainMed badd = new BodyPainMed();
                 badd.setVisible(true);
                 dispose();
             } else {
-                Allergy a = new Allergy();
-                AllergyAdd gadd = a.new AllergyAdd();
+                AllergyMed gadd = new AllergyMed();
                 gadd.setVisible(true);
                 dispose();
             }
