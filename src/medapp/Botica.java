@@ -1,5 +1,6 @@
 package medapp;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -7,8 +8,8 @@ import javax.swing.*;
 public class Botica extends JFrame {
 
     JLabel label = new JLabel("--☺☺ M E D A P P ☺☺--");
-    JButton button1 = new JButton("PHARMACIST");
-    JButton button2 = new JButton("CUSTOMER");
+    JButton button1 = new JButton("GET STARTED");
+//    JButton button2 = new JButton("CUSTOMER");
 
     JPanel panel = new JPanel();
 
@@ -22,7 +23,7 @@ public class Botica extends JFrame {
 
         panel.add(label);
         panel.add(button1);
-        panel.add(button2);
+//        panel.add(button2);
 
         label.setSize(600, 500);
         label.setBounds(510, 200, 100, 80);
@@ -31,10 +32,11 @@ public class Botica extends JFrame {
         button1.setBounds(500, 300, 100, 50);
         button1.setVisible(true);
         button1.setSize(150, 50);
-        button2.setLocation(500, 400);
-        button2.setVisible(true);
-        button2.setSize(150, 50);
+//        button2.setLocation(500, 400);
+//        button2.setVisible(true);
+//        button2.setSize(150, 50);
 
+        panel.setBackground(new Color(255,204,255));
         getContentPane().add(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
@@ -43,7 +45,8 @@ public class Botica extends JFrame {
 
             public void actionPerformed(ActionEvent ae) {
                 if (true) {
-                    Login l = new Login();
+                    State l = new State();
+//                    Login l = new Login();
                     l.setVisible(true);
                     dispose();
                 }
@@ -51,17 +54,17 @@ public class Botica extends JFrame {
 
         });
 
-        button2.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                if (true) {
-                    Choice c = new Choice();
-                    c.setVisible(true);
-                    dispose();
-                }
-            }
-
-        });
+//        button2.addActionListener(new ActionListener() {
+//
+//            public void actionPerformed(ActionEvent e) {
+//                if (true) {
+//                    Choice c = new Choice();
+//                    c.setVisible(true);
+//                    dispose();
+//                }
+//            }
+//
+//        });
 
     }
 
@@ -102,9 +105,9 @@ public class Botica extends JFrame {
         yes.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent ae) {
                     if(true){
-                        Login l = new Login();
-                        l.setVisible(true);
-                        dispose();
+//                        Login l = new Login();
+//                        l.setVisible(true);
+//                        dispose();
                     }
                 }
                 

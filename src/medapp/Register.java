@@ -2,10 +2,9 @@ package medapp;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,7 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
 
 public class Register extends JFrame {
 
@@ -26,7 +24,7 @@ public class Register extends JFrame {
     JTextField userin = new JTextField();
     JTextField useage = new JTextField();
     JPasswordField passwordin = new JPasswordField();
-    JPasswordField cpassword = new JPasswordField();
+    JPasswordField cpasswordin = new JPasswordField();
 
     Register() {
         super("Register Page");
@@ -40,7 +38,7 @@ public class Register extends JFrame {
         pass.setBounds(70, 100, 505, 20);
         passwordin.setBounds(70, 120, 150, 20);
         cpass.setBounds(70, 140, 505, 20);
-        cpassword.setBounds(70, 160, 150, 20);
+        cpasswordin.setBounds(70, 160, 150, 20);
         reg.setBounds(100, 200, 100, 20);
 
         panel.add(user);
@@ -48,7 +46,7 @@ public class Register extends JFrame {
         panel.add(useage);
         panel.add(age);
         panel.add(cpass);
-        panel.add(cpassword);
+        panel.add(cpasswordin);
         panel.add(userin);
         panel.add(passwordin);
         panel.add(reg);
@@ -62,44 +60,52 @@ public class Register extends JFrame {
     public void actionlogin() {
         reg.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                String uname = userin.getText();
-                String uage = useage.getText();
-                String paswd = String.valueOf(passwordin.getPassword());
-                String cpaswd = String.valueOf(cpassword.getPassword());
-                
-                PreparedStatement st;
-                String query = "INSERT INTO 'the_app_users'('u_uname', 'u_uage', 'u_paswd', 'u_cpaswd') VALUES (?,?,?,?) ";
-                
-                try{
-                    st = MyConnection..prepareStatement(query);
-                }catch(SQLException ex){
-                    Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-                if (uname == null && uage == null && paswd == null && cpaswd == null) {
-                    JOptionPane.showMessageDialog(null, "Please complete!!");
-                    cpassword.setText("");
-                    passwordin.setText("");
-                    useage.setText("");
-                    userin.setText("");
-                    userin.requestFocus();
-                } else {
-                    if (uname != null && uage != null && paswd != null && cpaswd != null) {
 
-                        if (passwordin.getText().equals(cpassword.getText())) {
-                            Pharmacist regFace = new Pharmacist();
-                            regFace.setVisible(true);
-                            dispose();
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Mismatched password!!!");
-                            cpassword.setText("");
-                            passwordin.setText("");
-                            passwordin.requestFocus();
-                        }
-                    }
-
+                Connection con = null;
+                String query;
+                String username = userin.getText();
+                String age = useage.getText();
+                String password = String.valueOf(passwordin.getPassword());
+                String cpassword = String.valueOf(cpasswordin.getPassword());
+                
+                if (username.equals("")){
+                    JOptionPane.showMessageDialog(null, "input username");
+                }else if (age.equals("")){
+                    JOptionPane.showMessageDialog(null, "input age");
+                }else if (password.equals("")){
+                    JOptionPane.showMessageDialog(null, "input password");
+                }else if (!password.equals(cpassword)){
+                    JOptionPane.showMessageDialog(null, "mismatched password");
                 }
+
+                try {
+                    String myDriver = "org.gjt.mm.mysql.Driver";
+                    String myUrl = "jdbc:mysql://localhost/medapp";
+                    Class.forName(myDriver);
+
+                    con = DriverManager.getConnection(myUrl, "root", "");
+
+                    query = "INSERT INTO register( `username`, `age`, `password`, `cpassword`)" + "VALUES (?,?,?,?)";
+                    PreparedStatement preparedStmt = con.prepareStatement(query);
+                    preparedStmt.setString(1, username);
+                    preparedStmt.setString(2, age);
+                    preparedStmt.setString(3, password);
+                    preparedStmt.setString(4, cpassword);
+
+                    preparedStmt.execute();
+
+                    con.close();
+                } catch (Exception e) {
+                    System.err.println("Got an exception!");
+                    System.err.println(e.getMessage());
+                }
+//                Login login = new Login();
+//                login.setVisible(true);
+//                dispose();
+//                JOptionPane.showMessageDialog(null, "Successfully Registered!!!");
+
             }
+
         });
     }
 
