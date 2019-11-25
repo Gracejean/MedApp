@@ -1,9 +1,6 @@
-
 package medapp;
 
-
 public class State extends javax.swing.JFrame {
-
 
     public State() {
         initComponents();
@@ -169,27 +166,27 @@ public class State extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnpharmacistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpharmacistActionPerformed
-       
-               
-                    Signin s = new Signin();
-                    s.setVisible(true);
-                    dispose();
-                
-            
+
+        Signin s = new Signin();
+        s.setVisible(true);
+        dispose();
+
+
     }//GEN-LAST:event_btnpharmacistActionPerformed
 
     private void btnpharmacistMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnpharmacistMouseClicked
     }//GEN-LAST:event_btnpharmacistMouseClicked
 
     private void btncustomerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btncustomerMouseClicked
-        
-            
+
+
     }//GEN-LAST:event_btncustomerMouseClicked
 
     private void btncustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncustomerActionPerformed
-        Login l = new Login();
-        l.setVisible(true);
+        Signin s = new Signin();
+        s.setVisible(true);
         dispose();
+
     }//GEN-LAST:event_btncustomerActionPerformed
 
     /**
@@ -253,5 +250,4 @@ public class State extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     // End of variables declaration//GEN-END:variables
 
-    
 }
