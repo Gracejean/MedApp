@@ -1,11 +1,18 @@
-
 package medapp;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class Signin extends javax.swing.JFrame {
 
     /**
-     * Creates new form 
+     * Creates new form
      */
     public Signin() {
         initComponents();
@@ -27,11 +34,11 @@ public class Signin extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         btn_create = new javax.swing.JButton();
-        passwordfield = new javax.swing.JPasswordField();
         username = new javax.swing.JLabel();
         password = new javax.swing.JLabel();
         userfield = new javax.swing.JTextField();
         login = new javax.swing.JButton();
+        passwordfield = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,13 +101,6 @@ public class Signin extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        passwordfield.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        passwordfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordfieldActionPerformed(evt);
-            }
-        });
-
         username.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         username.setText("Username");
 
@@ -124,6 +124,12 @@ public class Signin extends javax.swing.JFrame {
             }
         });
 
+        passwordfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordfieldActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -132,14 +138,14 @@ public class Signin extends javax.swing.JFrame {
             .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(79, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(password)
                     .addComponent(username)
-                    .addComponent(passwordfield, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(userfield, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(userfield, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
-                        .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passwordfield))
                 .addGap(62, 62, 62))
         );
         jPanel2Layout.setVerticalGroup(
@@ -153,9 +159,9 @@ public class Signin extends javax.swing.JFrame {
                 .addComponent(userfield, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(password)
-                .addGap(18, 18, 18)
-                .addComponent(passwordfield, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(passwordfield, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(login, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
                 .addGap(25, 25, 25)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -199,15 +205,54 @@ public class Signin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void passwordfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordfieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordfieldActionPerformed
-
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        Pharmacist p = new Pharmacist();
-        p.setVisible(true);
-        dispose();
-        
+        ResultSet rs;
+        PreparedStatement ps;
+        String username = userfield.getText();
+        String password = String.valueOf(passwordfield.getPassword());
+
+        Connection con = null;
+
+        try {
+            String query = "SELECT * FROM `register` WHERE `username` = ? AND `password` = ?";
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
+            ps = con.prepareStatement(query);
+
+            ps.setString(1, username);
+            ps.setString(2, password);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String pass = rs.getString("password");
+                if (password.equals(pass)) {
+                    JOptionPane.showMessageDialog(null, "You have successfully logged in!");
+                    dispose();
+                    Medicine m = new Medicine();
+                    m.setVisible(true);
+                    passwordfield.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid password!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+//                 dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid username!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            ps.close();
+            rs.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Signin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Signin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+//        Pharmacist p = new Pharmacist();
+//        p.setVisible(true);
+//        dispose();
+
     }//GEN-LAST:event_loginActionPerformed
 
     private void userfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userfieldActionPerformed
@@ -219,6 +264,10 @@ public class Signin extends javax.swing.JFrame {
         s.setVisible(true);
         dispose();
     }//GEN-LAST:event_btn_createActionPerformed
+
+    private void passwordfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordfieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordfieldActionPerformed
 
     /**
      * @param args the command line arguments

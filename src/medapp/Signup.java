@@ -242,21 +242,26 @@ public class Signup extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "input password");
         } else if (!password.equals(cpassword)) {
             JOptionPane.showMessageDialog(null, "mismatched password");
+        }else {
+            JOptionPane.showMessageDialog(null, "You have successfully logged in!");
+            dispose();
+            Medicine m = new Medicine();
+            m.setVisible(true);
+            
         }
 
         try {
-            String myDriver = "org.gjt.mm.mysql.Driver";
+            String myDriver = "com.mysql.jdbc.Driver";
             String myUrl = "jdbc:mysql://localhost/medapp";
             Class.forName(myDriver);
 
             con = DriverManager.getConnection(myUrl, "root", "");
 
-            query = "INSERT INTO register( `username`, `age`, `password`, `cpassword`)" + "VALUES (?,?,?,?)";
+            query = "INSERT INTO register( `username`, `age`, `password`)" + "VALUES (?,?,?)";
             PreparedStatement preparedStmt = con.prepareStatement(query);
             preparedStmt.setString(1, username);
             preparedStmt.setString(2, age);
             preparedStmt.setString(3, password);
-            preparedStmt.setString(4, cpassword);
 
             preparedStmt.execute();
 
@@ -265,6 +270,8 @@ public class Signup extends javax.swing.JFrame {
             System.err.println("Got an exception!");
             System.err.println(e.getMessage());
         }
+        
+        
 //                Login login = new Login();
 //                login.setVisible(true);
 //                dispose();

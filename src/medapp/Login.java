@@ -51,13 +51,84 @@ public class Login extends JFrame {
                 String username = userin.getText();
                 String password = String.valueOf(passwordin.getPassword());
 
-<<<<<<< HEAD
                 try {
                     //                if(username.length()>0 && password.length() >0 ){
-//
-                Connection con =null;
 
-                     con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
+                    try {
+                        //                if(username.length()>0 && password.length() >0 ){
+//
+                        Connection con = null;
+
+                        con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
+
+                        String query = "Select * from adminlogin Where username='" + username + "' and password='" + password + "'";
+                        ps = con.prepareStatement(query);
+
+                        rs = ps.executeQuery();
+
+                        if (rs.next()) {
+
+//                    home hme = new home();
+//                    this.setVisible(false);
+//                    hme.setVisible(true);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "username and password are wrong ");
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+
+                    }
+
+//                else
+                    {
+//      JOptionPane.showMessageDialog(null, "please field username and password ");
+//            }
+
+//                String query = "SELECT  `username`, `password`,  FROM `register` WHERE `username ` = ? AND `password` = ?";
+//            PreparedStatement ps;
+//            Connection con;
+//                String myDriver = "org.gjt.mm.mysql.Driver";
+//                    String myUrl = "jdbc:mysql://localhost/medapp";
+//                try {
+                        String myDriver = "org.gjt.mm.mysql.Driver";
+//                    String myUrl = "jdbc:mysql://localhost/medapp";
+//                Class.forName(myDriver);
+
+//                con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
+//                    query = "INSERT INTO register( `username`, `age`, `password`, `cpassword`)" + "VALUES (?,?,?,?)";
+//                ps = con.prepareStatement("SELECT  `username`, `password`,  FROM `register` WHERE `username ` = ? AND `password` = ?");
+//                ps.setString(1, username);
+//                ps.setString(2, password);
+//                    ps.executeQuery();
+//                    ps =   MyConnection.getConnection().prepareStatement(query);
+//                    ps.setString(1, username);
+//                    ps.setString(2, password);
+//                    con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
+//                    Class.forName(myDriver);
+//                rs = ps.executeQuery();
+//                if (rs.next()) {
+//                    JOptionPane.showMessageDialog(null, "Yes");
+//                } else {
+//                    JOptionPane.showMessageDialog(null, "No");
+//                }
+//                } catch (ClassNotFoundException ex) {
+//                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (ClassNotFoundException ex) {
+//                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    //                try {
+                    //                    //                if(username.length()>0 && password.length() >0 ){
+                    ////
+                                    Connection con =null;
+                    //
+                    //                     con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
+                    //
+                    //                    String query = "Select * from adminlogin Where username='" + username + "' and password='" + password + "'";
+                    //                    ps = con.prepareStatement(query);
+                    //
+                    //                    rs = ps.executeQuery();
+                    con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
 
                     String query = "Select * from adminlogin Where username='" + username + "' and password='" + password + "'";
                     ps = con.prepareStatement(query);
@@ -74,12 +145,11 @@ public class Login extends JFrame {
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-              
-            }
-                
+
+                }
 
 //                else
-            {
+                {
 //      JOptionPane.showMessageDialog(null, "please field username and password ");
 //            }
 
@@ -89,7 +159,7 @@ public class Login extends JFrame {
 //                String myDriver = "org.gjt.mm.mysql.Driver";
 //                    String myUrl = "jdbc:mysql://localhost/medapp";
 //                try {
-                String myDriver = "org.gjt.mm.mysql.Driver";
+                    String myDriver = "org.gjt.mm.mysql.Driver";
 //                    String myUrl = "jdbc:mysql://localhost/medapp";
 //                Class.forName(myDriver);
 
@@ -114,88 +184,22 @@ public class Login extends JFrame {
 //                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
 //                } catch (ClassNotFoundException ex) {
 //                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                //            catch (SQLException e
+                        //                ) {
+                        //                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e);
+                        //            }
+                        //                if (uname.equals("pharmacist") && paswd.equals("12345")) {
+                        //                    Pharmacist regFace = new Pharmacist();
+                        //                    regFace.setVisible(true);
+                        //                    dispose();
+                        //                } else {
+                        //                    JOptionPane.showMessageDialog(null, "Wrong Password / Username");
+                        //                    userin.setText("");
+                        //                    passwordin.setText("");/
+                        //                    userin.requestFocus();
+                        //                }
             }
-=======
-//                try {
-//                    //                if(username.length()>0 && password.length() >0 ){
-////
-//                Connection con =null;
-//
-//                     con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
-//
-//                    String query = "Select * from adminlogin Where username='" + username + "' and password='" + password + "'";
-//                    ps = con.prepareStatement(query);
-//
-//                    rs = ps.executeQuery();
-//
-//                    if (rs.next()) {
-//
-////                    home hme = new home();
-////                    this.setVisible(false);
-////                    hme.setVisible(true);
-//                    } else {
-//                        JOptionPane.showMessageDialog(null, "username and password are wrong ");
-//                    }
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-//              
-//            }
-                
-
-//                else
-            {
-//      JOptionPane.showMessageDialog(null, "please field username and password ");
-//            }
-
-//                String query = "SELECT  `username`, `password`,  FROM `register` WHERE `username ` = ? AND `password` = ?";
-//            PreparedStatement ps;
-//            Connection con;
-//                String myDriver = "org.gjt.mm.mysql.Driver";
-//                    String myUrl = "jdbc:mysql://localhost/medapp";
-//                try {
-                String myDriver = "org.gjt.mm.mysql.Driver";
-//                    String myUrl = "jdbc:mysql://localhost/medapp";
-//                Class.forName(myDriver);
-
-//                con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
-//                    query = "INSERT INTO register( `username`, `age`, `password`, `cpassword`)" + "VALUES (?,?,?,?)";
-//                ps = con.prepareStatement("SELECT  `username`, `password`,  FROM `register` WHERE `username ` = ? AND `password` = ?");
-//                ps.setString(1, username);
-//                ps.setString(2, password);
-//                    ps.executeQuery();
-//                    ps =   MyConnection.getConnection().prepareStatement(query);
-//                    ps.setString(1, username);
-//                    ps.setString(2, password);
-//                    con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
-//                    Class.forName(myDriver);
-//                rs = ps.executeQuery();
-//                if (rs.next()) {
-//                    JOptionPane.showMessageDialog(null, "Yes");
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "No");
-//                }
-//                } catch (ClassNotFoundException ex) {
-//                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (ClassNotFoundException ex) {
-//                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            }
->>>>>>> 606f5b2a64f359b726ba5a5287620aac71d079d0
-//            catch (SQLException e
-
-//                ) {
-//                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e);
-//            }
-//                if (uname.equals("pharmacist") && paswd.equals("12345")) {
-//                    Pharmacist regFace = new Pharmacist();
-//                    regFace.setVisible(true);
-//                    dispose();
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "Wrong Password / Username");
-//                    userin.setText("");
-//                    passwordin.setText("");/
-//                    userin.requestFocus();
-//                }
-        }
         }
         );
 
