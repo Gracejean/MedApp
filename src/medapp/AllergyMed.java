@@ -21,7 +21,7 @@ import javax.swing.table.TableModel;
 public final class AllergyMed extends javax.swing.JFrame {
 
     AllergyMed() {
-        initComponents();
+        initComponents();   
         ShowAllergy();
     }
 
@@ -68,11 +68,7 @@ public final class AllergyMed extends javax.swing.JFrame {
        
         DefaultTableModel model = (DefaultTableModel) table.getModel();
          ArrayList<Allergymedicine> list = getAllergyList();
-//         if (!con.equals(""))
-//        list = sql.getContactListsByGroup(con);
-//    else
-//        list = sql.getContactLists();
-//        Object[] row = new Object[6];
+
 
         for (int i = 0; i < list.size(); ++i) {
             Object[] row = new Object[6];
@@ -96,10 +92,8 @@ public final class AllergyMed extends javax.swing.JFrame {
             st = con.createStatement();
             if ((st.executeUpdate(query)) == 1) {
                 DefaultTableModel model = (DefaultTableModel) table.getModel();
-//                model.addRow(0);
                 model.setRowCount(0);
-//                model.fireTableDataChanged();
-//                table.repaint();
+
 
 
                 ShowAllergy();
