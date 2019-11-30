@@ -9,6 +9,7 @@ public class Botica extends JFrame {
 
     JLabel label = new JLabel("--☺☺ M E D A P P ☺☺--");
     JButton button1 = new JButton("GET STARTED");
+    JPanel panelShad = new JPanel();
 //    JButton button2 = new JButton("CUSTOMER");
 
     JPanel panel = new JPanel();
@@ -17,16 +18,19 @@ public class Botica extends JFrame {
         super("MEDAPP");
 
         panel.setLayout(null);
-        setBounds(200, 200, 200, 200);
+        setBounds(200, 200, 400, 400);
 
-        setSize(400, 400);
 
-        panel.add(label);
+//        panel.add(label);
         panel.add(button1);
+        panel.add(panelShad);
+        panelShad.add(label);
 //        panel.add(button2);
 
-        label.setSize(600, 500);
-        label.setBounds(510, 200, 100, 80);
+//        label.setSize(600, 500);
+        panelShad.setBackground(Color.white);
+        panelShad.setBounds(0,35, 385,50);
+        label.setBounds(10, 40, 100, 20);
         label.setVisible(true);
         label.setSize(150, 50);
         button1.setBounds(500, 300, 100, 50);
