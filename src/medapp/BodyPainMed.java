@@ -5,7 +5,14 @@
  */
 package medapp;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -18,7 +25,87 @@ public class BodyPainMed extends javax.swing.JFrame {
      */
     public BodyPainMed() {
         initComponents();
+        ShowAllergy();
     }
+    
+    public Connection getConnection() {
+        Connection con;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
+            return con;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<Allergymedicine> getAllergyList() {
+        ArrayList<Allergymedicine> allergyList = new ArrayList<>();
+        Connection connection = getConnection();
+
+        String query = "Select* From `allergy`";
+        Statement st;
+        ResultSet rs;
+
+        try {
+            st = connection.createStatement();
+            rs = st.executeQuery(query);
+            Allergymedicine allergy;
+
+            while (rs.next()) {
+                allergy = new Allergymedicine(rs.getInt("Id"), rs.getString("Brandname"), rs.getString("Generic name"), rs.getString("Description"), rs.getInt("Price"), rs.getInt("Quantity in Stock"));
+                allergyList.add(allergy);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return allergyList;
+    }
+
+    public void ShowAllergy() {
+       
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+         ArrayList<Allergymedicine> list = getAllergyList();
+
+
+        for (int i = 0; i < list.size(); ++i) {
+            Object[] row = new Object[6];
+            
+            row[0] = list.get(i).getId();
+            row[1] = list.get(i).getBrandname();
+            row[2] = list.get(i).getGenericname();
+            row[3] = list.get(i).getDescription();
+            row[4] = list.get(i).getPrice();
+            row[5] = list.get(i).getQuantity();
+
+            model.addRow(row);
+        }   
+        table.setModel(model);
+    }
+
+    public void executeQuery(String query, String Message) {
+        Connection con = getConnection();
+        Statement st;
+        try {
+            st = con.createStatement();
+            if ((st.executeUpdate(query)) == 1) {
+                DefaultTableModel model = (DefaultTableModel) table.getModel();
+                model.setRowCount(0);
+
+
+
+                ShowAllergy();
+                JOptionPane.showMessageDialog(null, "Data " + Message + " successfully");
+            } else {
+                JOptionPane.showMessageDialog(null, "Not data " + Message);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,6 +130,10 @@ public class BodyPainMed extends javax.swing.JFrame {
         btn_add = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
+        btn_update = new javax.swing.JButton();
+        id = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        btn_delete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,29 +188,57 @@ public class BodyPainMed extends javax.swing.JFrame {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Alaxan", "Ibuprofen", "For arthritis, rheumatism and etc",  new Integer(8),  new Integer(50)},
-                {"Skelan550", "Naproxen", "For rheumatoid arthritis and etc.",  new Integer(19),  new Integer(40)},
-                {"Medicol", "Ibuprofen", "For neuralgia, sprains and etc.",  new Integer(20),  new Integer(30)}
+                {null, "Alaxan", "Ibuprofen", "For arthritis, rheumatism and etc",  new Integer(8),  new Integer(50)},
+                {null, "Skelan550", "Naproxen", "For rheumatoid arthritis and etc.",  new Integer(19),  new Integer(40)},
+                {null, "Medicol", "Ibuprofen", "For neuralgia, sprains and etc.",  new Integer(20),  new Integer(30)}
             },
             new String [] {
-                "Brandname", "Generic name", "Description", "Price", "Quantity"
+                "ID", "Brandname", "Generic name", "Description", "Price", "Quantity"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
         if (table.getColumnModel().getColumnCount() > 0) {
-            table.getColumnModel().getColumn(0).setMaxWidth(70);
-            table.getColumnModel().getColumn(1).setMaxWidth(250);
-            table.getColumnModel().getColumn(3).setMaxWidth(50);
-            table.getColumnModel().getColumn(4).setMaxWidth(60);
+            table.getColumnModel().getColumn(0).setMaxWidth(50);
+            table.getColumnModel().getColumn(1).setMaxWidth(70);
+            table.getColumnModel().getColumn(2).setMaxWidth(250);
+            table.getColumnModel().getColumn(4).setMaxWidth(50);
+            table.getColumnModel().getColumn(5).setMaxWidth(60);
         }
+
+        btn_update.setText("Update");
+        btn_update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updateActionPerformed(evt);
+            }
+        });
+
+        id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("ID");
+
+        btn_delete.setText("Delete");
+        btn_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -127,6 +246,11 @@ public class BodyPainMed extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btn_update)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_delete))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,61 +263,65 @@ public class BodyPainMed extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(price_in, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)
-                            .addComponent(quan_in, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(quan_in, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
+                        .addGap(58, 58, 58)
                         .addComponent(btn_add)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(brand_in, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(gen_in, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(des_in, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(price_in, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(quan_in, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
+                .addGap(13, 13, 13)
                 .addComponent(btn_add)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_update)
+                    .addComponent(btn_delete))
+                .addGap(12, 12, 12))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -220,11 +348,36 @@ public class BodyPainMed extends javax.swing.JFrame {
     }//GEN-LAST:event_price_inActionPerformed
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-          DefaultTableModel model = (DefaultTableModel) table.getModel();
-                    model.addRow(new Object[]{
-                        brand_in.getText(),gen_in.getText(),des_in.getText(),price_in.getText(),quan_in.getText()
-                    });
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        String query1 = "INSERT INTO `allergy`(`Brandname`, `Generic name`, `Description`, `Price`, `Quantity in Stock`) VALUES ('" + brand_in.getText() + "','" + gen_in.getText() + "','" + des_in.getText() + "','" + price_in.getText() + "'," + quan_in.getText() + ")";
+        executeQuery(query1, "Inserted");
     }//GEN-LAST:event_btn_addActionPerformed
+
+    private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idActionPerformed
+
+    private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
+        String query = "UPDATE `allergy` SET `Brandname`= '" + brand_in.getText() + "',`Generic name`='" + gen_in.getText() + "',`Description`='" + des_in.getText() + "',`Price`= '" + price_in.getText() + "',`Quantity in Stock`= '" + quan_in.getText() + "' WHERE `id` = " + id.getText();
+
+        executeQuery(query, "Updated");
+    }//GEN-LAST:event_btn_updateActionPerformed
+
+    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
+        String query = "DELETE FROM `allergy` WHERE `id` = '" + id.getText() + "'";
+        executeQuery(query, "Deleted");
+    }//GEN-LAST:event_btn_deleteActionPerformed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        int i = table.getSelectedRow();
+        TableModel model = table.getModel();
+        id.setText(model.getValueAt(i, 0).toString());
+        brand_in.setText(model.getValueAt(i, 1).toString());
+        gen_in.setText(model.getValueAt(i, 2).toString());
+        des_in.setText(model.getValueAt(i, 3).toString());
+        price_in.setText(model.getValueAt(i, 4).toString());
+        quan_in.setText(model.getValueAt(i, 5).toString());
+    }//GEN-LAST:event_tableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -265,13 +418,17 @@ public class BodyPainMed extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField brand_in;
     private javax.swing.JButton btn_add;
+    private javax.swing.JButton btn_delete;
+    private javax.swing.JButton btn_update;
     private javax.swing.JTextField des_in;
     private javax.swing.JTextField gen_in;
+    private javax.swing.JTextField id;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField price_in;
