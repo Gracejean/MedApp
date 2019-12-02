@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import medapp.Botica.CoughMedicine;
 
 /**
  *
@@ -25,6 +26,7 @@ public class CoughMed extends javax.swing.JFrame {
      */
     public CoughMed() {
         initComponents();
+        ShowCough();
     }
     
     public Connection getConnection() {
@@ -39,21 +41,22 @@ public class CoughMed extends javax.swing.JFrame {
         }
     }
 
-    public ArrayList<Allergymedicine> getAllergyList() {
-        ArrayList<Allergymedicine> allergyList = new ArrayList<>();
+    public ArrayList<CoughMedicine> getAllergyList() {
+        ArrayList<CoughMedicine> allergyList = new ArrayList<>();
         Connection connection = getConnection();
 
-        String query = "Select* From `allergy`";
+        String query = "Select* From `cough`";
         Statement st;
         ResultSet rs;
 
         try {
             st = connection.createStatement();
             rs = st.executeQuery(query);
-            Allergymedicine allergy;
+            CoughMedicine allergy;
 
             while (rs.next()) {
-                allergy = new Allergymedicine(rs.getInt("Id"), rs.getString("Brandname"), rs.getString("Generic name"), rs.getString("Description"), rs.getInt("Price"), rs.getInt("Quantity in Stock"));
+                Botica b = new Botica();
+                allergy = b.new CoughMedicine(rs.getInt("Id"), rs.getString("Brandname"), rs.getString("Generic name"), rs.getString("Description"), rs.getInt("Price"), rs.getInt("Quantity in Stock"));
                 allergyList.add(allergy);
             }
         } catch (Exception e) {
@@ -63,10 +66,10 @@ public class CoughMed extends javax.swing.JFrame {
         return allergyList;
     }
 
-    public void ShowAllergy() {
+    public void ShowCough() {
        
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-         ArrayList<Allergymedicine> list = getAllergyList();
+         ArrayList<CoughMedicine> list = getAllergyList();
 
 
         for (int i = 0; i < list.size(); ++i) {
@@ -95,7 +98,7 @@ public class CoughMed extends javax.swing.JFrame {
 
 
 
-                ShowAllergy();
+                ShowCough();
                 JOptionPane.showMessageDialog(null, "Data " + Message + " successfully");
             } else {
                 JOptionPane.showMessageDialog(null, "Not data " + Message);
@@ -363,8 +366,8 @@ public class CoughMed extends javax.swing.JFrame {
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        String query1 = "INSERT INTO `allergy`(`Brandname`, `Generic name`, `Description`, `Price`, `Quantity in Stock`) VALUES ('" + brand_in.getText() + "','" + gen_in.getText() + "','" + des_in.getText() + "','" + price_in.getText() + "'," + quan_in.getText() + ")";
-        executeQuery(query1, "Inserted");
+        String query = "INSERT INTO `cough`(`Brandname`, `Generic name`, `Description`, `Price`, `Quantity in Stock`) VALUES ('" + brand_in.getText() + "','" + gen_in.getText() + "','" + des_in.getText() + "','" + price_in.getText() + "'," + quan_in.getText() + ")";
+        executeQuery(query, "Inserted");
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void brand_inActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brand_inActionPerformed
@@ -372,13 +375,13 @@ public class CoughMed extends javax.swing.JFrame {
     }//GEN-LAST:event_brand_inActionPerformed
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
-        String query = "UPDATE `allergy` SET `Brandname`= '" + brand_in.getText() + "',`Generic name`='" + gen_in.getText() + "',`Description`='" + des_in.getText() + "',`Price`= '" + price_in.getText() + "',`Quantity in Stock`= '" + quan_in.getText() + "' WHERE `id` = " + id.getText();
+        String query = "UPDATE `cough` SET `Brandname`= '" + brand_in.getText() + "',`Generic name`='" + gen_in.getText() + "',`Description`='" + des_in.getText() + "',`Price`= '" + price_in.getText() + "',`Quantity in Stock`= '" + quan_in.getText() + "' WHERE `id` = " + id.getText();
 
         executeQuery(query, "Updated");
     }//GEN-LAST:event_btn_updateActionPerformed
 
     private void bnt_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_deleteActionPerformed
-        String query = "DELETE FROM `allergy` WHERE `id` = '" + id.getText() + "'";
+        String query = "DELETE FROM `cough` WHERE `id` = '" + id.getText() + "'";
         executeQuery(query, "Deleted");
     }//GEN-LAST:event_bnt_deleteActionPerformed
 

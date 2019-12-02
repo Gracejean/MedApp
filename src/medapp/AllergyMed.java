@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import medapp.Botica.AllergyMedicine;
 
 /**
  *
@@ -40,8 +41,8 @@ public final class AllergyMed extends javax.swing.JFrame {
         }
     }
 
-    public ArrayList<Allergymedicine> getAllergyList() {
-        ArrayList<Allergymedicine> allergyList = new ArrayList<>();
+    public ArrayList<AllergyMedicine> getAllergyList() {
+        ArrayList<AllergyMedicine> allergyList = new ArrayList<>();
         Connection connection = getConnection();
 
         String query = "Select* From `allergy`";
@@ -51,10 +52,11 @@ public final class AllergyMed extends javax.swing.JFrame {
         try {
             st = connection.createStatement();
             rs = st.executeQuery(query);
-            Allergymedicine allergy;
+            AllergyMedicine allergy;
 
             while (rs.next()) {
-                allergy = new Allergymedicine(rs.getInt("Id"), rs.getString("Brandname"), rs.getString("Generic name"), rs.getString("Description"), rs.getInt("Price"), rs.getInt("Quantity in Stock"));
+                Botica b = new Botica();
+                allergy = b.new AllergyMedicine(rs.getInt("Id"), rs.getString("Brandname"), rs.getString("Generic name"), rs.getString("Description"), rs.getInt("Price"), rs.getInt("Quantity in Stock"));
                 allergyList.add(allergy);
             }
         } catch (Exception e) {
@@ -67,7 +69,7 @@ public final class AllergyMed extends javax.swing.JFrame {
     public void ShowAllergy() {
        
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-         ArrayList<Allergymedicine> list = getAllergyList();
+         ArrayList<AllergyMedicine> list = getAllergyList();
 
 
         for (int i = 0; i < list.size(); ++i) {

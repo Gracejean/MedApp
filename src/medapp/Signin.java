@@ -214,7 +214,7 @@ public class Signin extends javax.swing.JFrame {
         Connection con = null;
 
         try {
-            String query = "SELECT * FROM `register` WHERE `username` = ? AND `password` = ?";
+            String query = "SELECT * FROM `pharmacists` WHERE `username` = ? AND `password` = ?";
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
             ps = con.prepareStatement(query);

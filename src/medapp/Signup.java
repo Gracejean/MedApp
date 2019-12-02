@@ -257,7 +257,7 @@ public class Signup extends javax.swing.JFrame {
 
             con = DriverManager.getConnection(myUrl, "root", "");
 
-            query = "INSERT INTO register( `username`, `age`, `password`)" + "VALUES (?,?,?)";
+            query = "INSERT INTO pharmacists( `username`, `age`, `password`)" + "VALUES (?,?,?)";
             PreparedStatement preparedStmt = con.prepareStatement(query);
             preparedStmt.setString(1, username);
             preparedStmt.setString(2, age);
