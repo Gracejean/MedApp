@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 
 public class Signup extends javax.swing.JFrame {
-//                    String user;
 
     /**
      * Creates new form
