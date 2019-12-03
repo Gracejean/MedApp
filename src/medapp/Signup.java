@@ -245,7 +245,7 @@ public class Signup extends javax.swing.JFrame {
         }else {
             JOptionPane.showMessageDialog(null, "You have successfully logged in!");
             dispose();
-            Medicine m = new Medicine();
+            Order_Medicine m = new Order_Medicine();
             m.setVisible(true);
             
         }
@@ -257,7 +257,7 @@ public class Signup extends javax.swing.JFrame {
 
             con = DriverManager.getConnection(myUrl, "root", "");
 
-            query = "INSERT INTO pharmacists( `username`, `age`, `password`)" + "VALUES (?,?,?)";
+            query = "INSERT INTO customers( `username`, `age`, `password`)" + "VALUES (?,?,?)";
             PreparedStatement preparedStmt = con.prepareStatement(query);
             preparedStmt.setString(1, username);
             preparedStmt.setString(2, age);

@@ -214,7 +214,7 @@ public class Signin extends javax.swing.JFrame {
         Connection con = null;
 
         try {
-            String query = "SELECT * FROM `pharmacists` WHERE `username` = ? AND `password` = ?";
+            String query = "SELECT * FROM `customers` WHERE `username` = ? AND `password` = ?";
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
             ps = con.prepareStatement(query);
@@ -229,7 +229,7 @@ public class Signin extends javax.swing.JFrame {
                 if (password.equals(pass)) {
                     JOptionPane.showMessageDialog(null, "You have successfully logged in!");
                     dispose();
-                    Medicine m = new Medicine();
+                    Order_Medicine m = new Order_Medicine();
                     m.setVisible(true);
                     passwordfield.setText("");
                 } else {

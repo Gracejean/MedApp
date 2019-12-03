@@ -3,15 +3,18 @@ package medapp;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class Signup_pharmacist extends javax.swing.JFrame {
-//                    String user;
+public class Signin_Pharmacist extends javax.swing.JFrame {
 
     /**
      * Creates new form
      */
-    public Signup_pharmacist() {
+    public Signin_Pharmacist() {
         initComponents();
     }
 
@@ -29,13 +32,13 @@ public class Signup_pharmacist extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        register = new javax.swing.JButton();
-        passwordfield = new javax.swing.JPasswordField();
+        jLabel2 = new javax.swing.JLabel();
+        btn_create = new javax.swing.JButton();
         username = new javax.swing.JLabel();
         password = new javax.swing.JLabel();
         userfield = new javax.swing.JTextField();
-        cpasswordfield = new javax.swing.JPasswordField();
-        password1 = new javax.swing.JLabel();
+        login = new javax.swing.JButton();
+        passwordfield = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,16 +49,16 @@ public class Signup_pharmacist extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 102, 204));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Register");
+        jLabel1.setText("LOGIN");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(120, 120, 120)
                 .addComponent(jLabel1)
-                .addGap(109, 109, 109))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -67,13 +70,13 @@ public class Signup_pharmacist extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(255, 102, 204));
 
-        register.setBackground(new java.awt.Color(255, 255, 255));
-        register.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        register.setText("Register");
-        register.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        register.addActionListener(new java.awt.event.ActionListener() {
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setText("Don't have account?");
+
+        btn_create.setText("Register");
+        btn_create.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registerActionPerformed(evt);
+                btn_createActionPerformed(evt);
             }
         });
 
@@ -82,24 +85,21 @@ public class Signup_pharmacist extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(108, 108, 108)
-                .addComponent(register, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel2)
+                .addGap(30, 30, 30)
+                .addComponent(btn_create)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(register)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(btn_create))
+                .addContainerGap())
         );
-
-        passwordfield.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        passwordfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordfieldActionPerformed(evt);
-            }
-        });
 
         username.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         username.setText("Username");
@@ -114,15 +114,21 @@ public class Signup_pharmacist extends javax.swing.JFrame {
             }
         });
 
-        cpasswordfield.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        cpasswordfield.addActionListener(new java.awt.event.ActionListener() {
+        login.setBackground(new java.awt.Color(255, 255, 255));
+        login.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        login.setText("Login");
+        login.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cpasswordfieldActionPerformed(evt);
+                loginActionPerformed(evt);
             }
         });
 
-        password1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        password1.setText("Confirm Password");
+        passwordfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordfieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -132,13 +138,14 @@ public class Signup_pharmacist extends javax.swing.JFrame {
             .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(79, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(password1)
-                    .addComponent(cpasswordfield, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(password)
                     .addComponent(username)
-                    .addComponent(passwordfield, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(userfield, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(userfield, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passwordfield))
                 .addGap(62, 62, 62))
         );
         jPanel2Layout.setVerticalGroup(
@@ -146,19 +153,17 @@ public class Signup_pharmacist extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(33, 33, 33)
                 .addComponent(username)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(userfield, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
+                .addGap(44, 44, 44)
                 .addComponent(password)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(passwordfield, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(password1)
-                .addGap(18, 18, 18)
-                .addComponent(cpasswordfield, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(login, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                .addGap(25, 25, 25)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -168,16 +173,16 @@ public class Signup_pharmacist extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(93, Short.MAX_VALUE)
+                .addContainerGap(91, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(98, 98, 98))
+                .addGap(75, 75, 75))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(27, 27, 27)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -200,71 +205,73 @@ public class Signup_pharmacist extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void passwordfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordfieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordfieldActionPerformed
-
-    private void registerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerActionPerformed
-        Connection con = null;
-        String query;
+    private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
+        ResultSet rs;
+        PreparedStatement ps;
         String username = userfield.getText();
-//        String age = agefield.getText();
         String password = String.valueOf(passwordfield.getPassword());
-        String cpassword = String.valueOf(cpasswordfield.getPassword());
 
-        if (username.equals("")) {
-            JOptionPane.showMessageDialog(null, "input username");
-//        } else if (age.equals("")) {
-//            JOptionPane.showMessageDialog(null, "input age");
-        } else if (password.equals("")) {
-            JOptionPane.showMessageDialog(null, "input password");
-        } else if (!password.equals(cpassword)) {
-            JOptionPane.showMessageDialog(null, "mismatched password");
-        }else {
-            JOptionPane.showMessageDialog(null, "You have successfully logged in!");
-            dispose();
-            Medicine m = new Medicine();
-            m.setVisible(true);
-            
-        }
+        Connection con = null;
 
         try {
-            String myDriver = "com.mysql.jdbc.Driver";
-            String myUrl = "jdbc:mysql://localhost/medapp";
-            Class.forName(myDriver);
+            String query = "SELECT * FROM `pharmacists` WHERE `username` = ? AND `password` = ?";
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
+            ps = con.prepareStatement(query);
 
-            con = DriverManager.getConnection(myUrl, "root", "");
+            ps.setString(1, username);
+            ps.setString(2, password);
 
-            query = "INSERT INTO pharmacists( `username`, `password`)" + "VALUES (?,?)";
-            PreparedStatement preparedStmt = con.prepareStatement(query);
-            preparedStmt.setString(1, username);
-//            preparedStmt.setString(2, age);
-            preparedStmt.setString(2, password);
+            rs = ps.executeQuery();
 
-            preparedStmt.execute();
+            if (rs.next()) {
+                String pass = rs.getString("password");
+                if (password.equals(pass)) {
+                    JOptionPane.showMessageDialog(null, "You have successfully logged in!");
+                    dispose();
+                    Medicine m = new Medicine();
+                    m.setVisible(true);
+                    passwordfield.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid password!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
 
-            con.close();
-        } catch (Exception e) {
-            System.err.println("Got an exception!");
-            System.err.println(e.getMessage());
+//                 dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid username!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            ps.close();
+            rs.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Signin_Pharmacist.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Signin_Pharmacist.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-//                Login login = new Login();
-//                login.setVisible(true);
-//                dispose();
-//                JOptionPane.showMessageDialog(null, "Successfully Registered!!!");
 
+//        Pharmacist p = new Pharmacist();
+//        p.setVisible(true);
+//        dispose();
 
-    }//GEN-LAST:event_registerActionPerformed
+//        Pharmacist p = new Pharmacist();
+//        p.setVisible(true);
+//        dispose();
+
+    }//GEN-LAST:event_loginActionPerformed
 
     private void userfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userfieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userfieldActionPerformed
 
-    private void cpasswordfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpasswordfieldActionPerformed
+    private void btn_createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_createActionPerformed
+        Signup_pharmacist s = new Signup_pharmacist();
+        s.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btn_createActionPerformed
+
+    private void passwordfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordfieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cpasswordfieldActionPerformed
+    }//GEN-LAST:event_passwordfieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -280,25 +287,33 @@ public class Signup_pharmacist extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Signup_pharmacist.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            java.util.logging.Logger.getLogger(Signin_Pharmacist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Signup_pharmacist.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            java.util.logging.Logger.getLogger(Signin_Pharmacist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Signup_pharmacist.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            java.util.logging.Logger.getLogger(Signin_Pharmacist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Signup_pharmacist.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Signin_Pharmacist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -319,22 +334,22 @@ public class Signup_pharmacist extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Signup_pharmacist().setVisible(true);
+                new Signin_Pharmacist().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPasswordField cpasswordfield;
+    private javax.swing.JButton btn_create;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JButton login;
     private javax.swing.JLabel password;
-    private javax.swing.JLabel password1;
     private javax.swing.JPasswordField passwordfield;
-    private javax.swing.JButton register;
     private javax.swing.JTextField userfield;
     private javax.swing.JLabel username;
     // End of variables declaration//GEN-END:variables

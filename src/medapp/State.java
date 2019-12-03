@@ -167,7 +167,7 @@ public class State extends javax.swing.JFrame {
 
     private void btnpharmacistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpharmacistActionPerformed
 
-        Signin s = new Signin();
+        Signin_Pharmacist s = new Signin_Pharmacist();
         s.setVisible(true);
         dispose();
 
