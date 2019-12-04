@@ -26,7 +26,6 @@ public final class AllergyMed extends javax.swing.JFrame {
         initComponents();   
         ShowAllergy();
     }
-
     /**
      * Creates new form HeadacheMed
      */
