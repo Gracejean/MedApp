@@ -6,25 +6,24 @@
 package medapp;
 
 import java.awt.GridLayout;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+import javax.swing.*;
+import javax.swing.table.*;
+import java.util.Date;
 
 /**
  *
  * @author mendozaje_sd2022
  */
 public class Allergy extends javax.swing.JFrame {
+    
+    int quan;
+    int price;
+    int amount;
+    JPanel panel = new JPanel();
+    JFrame frame = new JFrame();
 
     /**
      * Creates new form Cough
@@ -222,13 +221,12 @@ public class Allergy extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void add_cartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_cartActionPerformed
-        int quan;
+
         int i = allergy_table.getSelectedRow();
         TableModel model = allergy_table.getModel();
 
         Object[] options1 = {"Order", "Cancel"};
 
-        JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 2, 2, 2));
 
         panel.add(new JLabel("ID: "));
@@ -247,32 +245,30 @@ public class Allergy extends javax.swing.JFrame {
         JTextField textField = new JTextField(10);
         panel.add(textField);
 
+        
+
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
+        String strDate = formatter.format(date);
+
         int result = JOptionPane.showOptionDialog(null, panel, "Order",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, options1, null);
         if (result == JOptionPane.YES_OPTION) {
-//            if (option == JOptionPane.YES_OPTION) {
 
-            String quantIn= textField.getText();
-//            String assignmentsInput = assignmentField.getText();
-//
+            String q = textField.getText();
+            String p = model.getValueAt(i, 4).toString();
+
             try {
-                quan = Integer.parseInt(quantIn);
-//                assignments = Integer.parseInt(assignmentsInput);
+                quan = Integer.parseInt(q);
+                price = Integer.parseInt(p);
+                amount = price * quan;
             } catch (NumberFormatException nfe) {
                 nfe.printStackTrace();
             }
+            
 
-            panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-
-            panel.add(new JLabel("Brandname: " + model.getValueAt(i, 1).toString()));
-            panel.add(new JLabel("Generic name: " + model.getValueAt(i, 2).toString()));
-            panel.add(new JLabel("Quantity Ordered: " + textField.getText()));
-
-//            JOptionPane.showMessageDialog(frame, pane);
-//        }
-//            JOptionPane.showMessageDialog(null, textField.getText() + " " + model.getValueAt(i, 1).toString());
+            JOptionPane.showMessageDialog(null, "☺☺☺--MEDAPP RECEIPT--☺☺☺" + "\n\n" + "Issued: " + strDate + "\n" + "Brandname: " + model.getValueAt(i, 1).toString() + "\n" + "Generic name: " + model.getValueAt(i, 2).toString() + "\n" + "Quantity: " + textField.getText() + "\n" + "Price: " + model.getValueAt(i, 4).toString() + "\n" + "Total amount: " + amount + "\n\n" + "☺☺-THANK FOR PURCHASING-☺☺");
         }
     }//GEN-LAST:event_add_cartActionPerformed
 

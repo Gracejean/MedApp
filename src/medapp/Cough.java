@@ -10,7 +10,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -23,7 +25,10 @@ import javax.swing.table.TableModel;
  * @author mendozaje_sd2022
  */
 public class Cough extends javax.swing.JFrame {
-
+    
+    int quan;
+    int price;
+    int amount;
     /**
      * Creates new form Cough
      */
@@ -228,11 +233,28 @@ public class Cough extends javax.swing.JFrame {
         JTextField textField = new JTextField(10);
         panel.add(textField);
 
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
+        String strDate = formatter.format(date);
+
         int result = JOptionPane.showOptionDialog(null, panel, "Order",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, options1, null);
         if (result == JOptionPane.YES_OPTION) {
-            JOptionPane.showMessageDialog(null, textField.getText());
+
+            String q = textField.getText();
+            String p = model.getValueAt(i, 4).toString();
+
+            try {
+                quan = Integer.parseInt(q);
+                price = Integer.parseInt(p);
+                amount = price * quan;
+            } catch (NumberFormatException nfe) {
+                nfe.printStackTrace();
+            }
+            
+
+            JOptionPane.showMessageDialog(null, "☺☺☺--MEDAPP RECEIPT--☺☺☺" + "\n\n" + "Issued: " + strDate + "\n" + "Brandname: " + model.getValueAt(i, 1).toString() + "\n" + "Generic name: " + model.getValueAt(i, 2).toString() + "\n" + "Quantity: " + textField.getText() + "\n" + "Price: " + model.getValueAt(i, 4).toString() + "\n" + "Total amount: " + amount + "\n\n" + "☺☺-THANK FOR PURCHASING-☺☺");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

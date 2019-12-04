@@ -5,10 +5,7 @@
  */
 package medapp;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -20,7 +17,11 @@ import medapp.Botica.AllergyMedicine;
  * @author 2ndyrGroupB
  */
 public final class AllergyMed extends javax.swing.JFrame {
-
+    
+    int quan;
+    int price;
+    int amount;
+    
     AllergyMed() {
         initComponents();   
         ShowAllergy();
