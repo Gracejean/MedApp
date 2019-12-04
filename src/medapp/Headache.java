@@ -5,6 +5,19 @@
  */
 package medapp;
 
+import java.awt.GridLayout;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author mendozaje_sd2022
@@ -16,7 +29,67 @@ public class Headache extends javax.swing.JFrame {
      */
     public Headache() {
         initComponents();
+        ShowHeadache();
     }
+    
+    public Connection getConnection() {
+        Connection con;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
+            return con;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<Botica.HeadacheMedicine> getHeadacheList() {
+        ArrayList<Botica.HeadacheMedicine> allergyList = new ArrayList<>();
+        Connection connection = getConnection();
+
+        String query = "Select* From `headache`";
+        Statement st;
+        ResultSet rs;
+
+        try {
+            st = connection.createStatement();
+            rs = st.executeQuery(query);
+            Botica.HeadacheMedicine headache;
+
+            while (rs.next()) {
+                Botica b = new Botica();
+                headache = b.new HeadacheMedicine(rs.getInt("Id"), rs.getString("Brandname"), rs.getString("Generic name"), rs.getString("Description"), rs.getInt("Price"), rs.getInt("Quantity in Stock"));
+                allergyList.add(headache);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return allergyList;
+    }
+
+    public void ShowHeadache() {
+       
+        DefaultTableModel model = (DefaultTableModel) headache_table.getModel();
+         ArrayList<Botica.HeadacheMedicine> list =  getHeadacheList();
+
+
+        for (int i = 0; i < list.size(); ++i) {
+            Object[] row = new Object[6];
+            
+            row[0] = list.get(i).getId();
+            row[1] = list.get(i).getBrandname();
+            row[2] = list.get(i).getGenericname();
+            row[3] = list.get(i).getDescription();
+            row[4] = list.get(i).getPrice();
+            row[5] = list.get(i).getQuantity();
+
+            model.addRow(row);
+        }   
+        headache_table.setModel(model);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,12 +103,9 @@ public class Headache extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        btn_bio = new javax.swing.JButton();
-        btn_flu = new javax.swing.JButton();
-        btn_nal = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        headache_table = new javax.swing.JTable();
+        add_cart = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,7 +123,7 @@ public class Headache extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(206, 206, 206)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(211, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -63,20 +133,35 @@ public class Headache extends javax.swing.JFrame {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\mendozaje_sd2022\\images\\bio.jpg")); // NOI18N
+        headache_table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\mendozaje_sd2022\\images\\flu.jpg")); // NOI18N
+            },
+            new String [] {
+                "ID", "Brandname", "Generic name", "Description", "Price", "Quantity"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+            };
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\mendozaje_sd2022\\images\\nal.jpg")); // NOI18N
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(headache_table);
+        if (headache_table.getColumnModel().getColumnCount() > 0) {
+            headache_table.getColumnModel().getColumn(0).setMaxWidth(30);
+            headache_table.getColumnModel().getColumn(4).setMaxWidth(50);
+            headache_table.getColumnModel().getColumn(5).setMaxWidth(80);
+        }
 
-        btn_bio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btn_bio.setText("BIOGESIC");
-
-        btn_flu.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btn_flu.setText("BIOFLU");
-
-        btn_nal.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btn_nal.setText("NALFON");
+        add_cart.setText("Add to Cart");
+        add_cart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                add_cartActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -84,44 +169,24 @@ public class Headache extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addComponent(btn_bio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_flu)
-                .addGap(82, 82, 82))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(157, 157, 157)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(192, 192, 192)
-                        .addComponent(btn_nal)))
+                        .addGap(190, 190, 190)
+                        .addComponent(add_cart)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_bio)
-                    .addComponent(btn_flu))
-                .addGap(23, 23, 23)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btn_nal)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addComponent(add_cart)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -137,6 +202,39 @@ public class Headache extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void add_cartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_cartActionPerformed
+        int i = headache_table.getSelectedRow();
+        TableModel model = headache_table.getModel();
+
+        Object[] options1 = {"Order", "Cancel"};
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(0, 2, 2, 2));
+
+        panel.add(new JLabel("ID: "));
+        panel.add(new JLabel(model.getValueAt(i, 0).toString()));
+        panel.add(new JLabel("Brandname: "));
+        panel.add(new JLabel(model.getValueAt(i, 1).toString()));
+        panel.add(new JLabel("Generic name: "));
+        panel.add(new JLabel(model.getValueAt(i, 2).toString()));
+        panel.add(new JLabel("Description: "));
+        panel.add(new JLabel(model.getValueAt(i, 3).toString()));
+        panel.add(new JLabel("Price: "));
+        panel.add(new JLabel(model.getValueAt(i, 4).toString()));
+        panel.add(new JLabel("Quantity in Stock: "));
+        panel.add(new JLabel(model.getValueAt(i, 5).toString()));
+        panel.add(new JLabel("Enter quantity to order: "));
+        JTextField textField = new JTextField(10);
+        panel.add(textField);
+
+        int result = JOptionPane.showOptionDialog(null, panel, "Order",
+                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, options1, null);
+        if (result == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(null, textField.getText());
+        }
+    }//GEN-LAST:event_add_cartActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,14 +273,11 @@ public class Headache extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_bio;
-    private javax.swing.JButton btn_flu;
-    private javax.swing.JButton btn_nal;
+    private javax.swing.JButton add_cart;
+    private javax.swing.JTable headache_table;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

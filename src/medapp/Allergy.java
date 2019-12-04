@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -27,6 +29,7 @@ public class Allergy extends javax.swing.JFrame {
      */
     public Allergy() {
         initComponents();
+        ShowAllergy();
     }
 
     public Connection getConnection() {
@@ -65,6 +68,27 @@ public class Allergy extends javax.swing.JFrame {
         }
         return allergyList;
     }
+
+    public void ShowAllergy() {
+
+        DefaultTableModel model = (DefaultTableModel) allergy_table.getModel();
+        ArrayList<Botica.AllergyMedicine> list = getAllergyList();
+
+        for (int i = 0; i < list.size(); ++i) {
+            Object[] row = new Object[6];
+
+            row[0] = list.get(i).getId();
+            row[1] = list.get(i).getBrandname();
+            row[2] = list.get(i).getGenericname();
+            row[3] = list.get(i).getDescription();
+            row[4] = list.get(i).getPrice();
+            row[5] = list.get(i).getQuantity();
+
+            model.addRow(row);
+        }
+        allergy_table.setModel(model);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -113,10 +137,7 @@ public class Allergy extends javax.swing.JFrame {
 
         allergy_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Brandname", "Generic name", "Description", "Price", "Quantitiy "
@@ -128,6 +149,11 @@ public class Allergy extends javax.swing.JFrame {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        allergy_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                allergy_tableMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(allergy_table);
@@ -195,29 +221,43 @@ public class Allergy extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void add_cartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_cartActionPerformed
-        ArrayList<Botica.AllergyMedicine> list = getAllergyList();
+
+
+        int i = allergy_table.getSelectedRow();
+        TableModel model = allergy_table.getModel();
 
         Object[] options1 = {"Order", "Cancel"};
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 2, 2, 2));
 
-        for (int i = 0; i < list.size(); ++i) {
-            panel.add(new JLabel("Brandname: "));
-            panel.add(new JLabel(list.get(i).getBrandname()));
-        }
+        panel.add(new JLabel("ID: "));
+        panel.add(new JLabel(model.getValueAt(i, 0).toString()));
+        panel.add(new JLabel("Brandname: "));
+        panel.add(new JLabel(model.getValueAt(i, 1).toString()));
+        panel.add(new JLabel("Generic name: "));
+        panel.add(new JLabel(model.getValueAt(i, 2).toString()));
+        panel.add(new JLabel("Description: "));
+        panel.add(new JLabel(model.getValueAt(i, 3).toString()));
+        panel.add(new JLabel("Price: "));
+        panel.add(new JLabel(model.getValueAt(i, 4).toString()));
+        panel.add(new JLabel("Quantity in Stock: "));
+        panel.add(new JLabel(model.getValueAt(i, 5).toString()));
         panel.add(new JLabel("Enter quantity to order: "));
         JTextField textField = new JTextField(10);
         panel.add(textField);
 
-//        JOptionPane.showConfirmDialog(null,"Please fill all the fields");
-        int result = JOptionPane.showOptionDialog(null, panel, "Enter a Number",
+        int result = JOptionPane.showOptionDialog(null, panel, "Order",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, options1, null);
         if (result == JOptionPane.YES_OPTION) {
             JOptionPane.showMessageDialog(null, textField.getText());
         }
     }//GEN-LAST:event_add_cartActionPerformed
+
+    private void allergy_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_allergy_tableMouseClicked
+
+    }//GEN-LAST:event_allergy_tableMouseClicked
 
     /**
      * @param args the command line arguments

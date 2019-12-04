@@ -41,7 +41,7 @@ public class HeadacheMed extends javax.swing.JFrame {
         }
     }
 
-    public ArrayList<HeadacheMedicine> getAllergyList() {
+    public ArrayList<HeadacheMedicine> getHeadacheList() {
         ArrayList<HeadacheMedicine> allergyList = new ArrayList<>();
         Connection connection = getConnection();
 
@@ -52,12 +52,12 @@ public class HeadacheMed extends javax.swing.JFrame {
         try {
             st = connection.createStatement();
             rs = st.executeQuery(query);
-            HeadacheMedicine allergy;
+            HeadacheMedicine headache;
 
             while (rs.next()) {
                 Botica b = new Botica();
-                allergy = b.new HeadacheMedicine(rs.getInt("Id"), rs.getString("Brandname"), rs.getString("Generic name"), rs.getString("Description"), rs.getInt("Price"), rs.getInt("Quantity in Stock"));
-                allergyList.add(allergy);
+                headache = b.new HeadacheMedicine(rs.getInt("Id"), rs.getString("Brandname"), rs.getString("Generic name"), rs.getString("Description"), rs.getInt("Price"), rs.getInt("Quantity in Stock"));
+                allergyList.add(headache);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,7 +69,7 @@ public class HeadacheMed extends javax.swing.JFrame {
     public void ShowHeadache() {
        
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-         ArrayList<HeadacheMedicine> list = getAllergyList();
+         ArrayList<HeadacheMedicine> list =  getHeadacheList();
 
 
         for (int i = 0; i < list.size(); ++i) {
@@ -190,9 +190,7 @@ public class HeadacheMed extends javax.swing.JFrame {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, "Biogesic", "Paracetamol", "For minor aches and etc.",  new Integer(10),  new Integer(50)},
-                {null, "Nalfon", "Fenoprofen", "For mild to moderate pain and etc.",  new Integer(100),  new Integer(40)},
-                {null, "Bioflu", "Penylophrine", "For clogged nose and etc.",  new Integer(20),  new Integer(30)}
+
             },
             new String [] {
                 "ID", "Brandname", "Generic name", "Description", "Price", "Quantity"

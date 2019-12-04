@@ -41,8 +41,8 @@ public class BodyPainMed extends javax.swing.JFrame {
         }
     }
 
-    public ArrayList<BodypainMedicine> getAllergyList() {
-        ArrayList<BodypainMedicine> allergyList = new ArrayList<>();
+    public ArrayList<BodypainMedicine> getBodyPainList() {
+        ArrayList<BodypainMedicine> bodypainList = new ArrayList<>();
         Connection connection = getConnection();
 
         String query = "Select* From `bodypain`";
@@ -52,24 +52,24 @@ public class BodyPainMed extends javax.swing.JFrame {
         try {
             st = connection.createStatement();
             rs = st.executeQuery(query);
-            BodypainMedicine allergy;
+            BodypainMedicine bodypain;
 
             while (rs.next()) {
                 Botica b = new Botica();
-                allergy = b.new BodypainMedicine(rs.getInt("Id"), rs.getString("Brandname"), rs.getString("Generic name"), rs.getString("Description"), rs.getInt("Price"), rs.getInt("Quantity in Stock"));
-                allergyList.add(allergy);
+                bodypain = b.new BodypainMedicine(rs.getInt("Id"), rs.getString("Brandname"), rs.getString("Generic name"), rs.getString("Description"), rs.getInt("Price"), rs.getInt("Quantity in Stock"));
+                bodypainList.add(bodypain);
             }
         } catch (Exception e) {
             e.printStackTrace();
 
         }
-        return allergyList;
+        return bodypainList;
     }
 
     public void ShowBodypain() {
 
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        ArrayList<BodypainMedicine> list = getAllergyList();
+        ArrayList<BodypainMedicine> list = getBodyPainList();
 
         for (int i = 0; i < list.size(); ++i) {
             Object[] row = new Object[6];
@@ -186,9 +186,7 @@ public class BodyPainMed extends javax.swing.JFrame {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, "Alaxan", "Ibuprofen", "For arthritis, rheumatism and etc",  new Integer(8),  new Integer(50)},
-                {null, "Skelan550", "Naproxen", "For rheumatoid arthritis and etc.",  new Integer(19),  new Integer(40)},
-                {null, "Medicol", "Ibuprofen", "For neuralgia, sprains and etc.",  new Integer(20),  new Integer(30)}
+
             },
             new String [] {
                 "ID", "Brandname", "Generic name", "Description", "Price", "Quantity"

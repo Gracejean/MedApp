@@ -41,7 +41,7 @@ public class CoughMed extends javax.swing.JFrame {
         }
     }
 
-    public ArrayList<CoughMedicine> getAllergyList() {
+    public ArrayList<CoughMedicine> getCoughList() {
         ArrayList<CoughMedicine> allergyList = new ArrayList<>();
         Connection connection = getConnection();
 
@@ -52,12 +52,12 @@ public class CoughMed extends javax.swing.JFrame {
         try {
             st = connection.createStatement();
             rs = st.executeQuery(query);
-            CoughMedicine allergy;
+            CoughMedicine cough;
 
             while (rs.next()) {
                 Botica b = new Botica();
-                allergy = b.new CoughMedicine(rs.getInt("Id"), rs.getString("Brandname"), rs.getString("Generic name"), rs.getString("Description"), rs.getInt("Price"), rs.getInt("Quantity in Stock"));
-                allergyList.add(allergy);
+                cough = b.new CoughMedicine(rs.getInt("Id"), rs.getString("Brandname"), rs.getString("Generic name"), rs.getString("Description"), rs.getInt("Price"), rs.getInt("Quantity in Stock"));
+                allergyList.add(cough);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,7 +69,7 @@ public class CoughMed extends javax.swing.JFrame {
     public void ShowCough() {
        
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-         ArrayList<CoughMedicine> list = getAllergyList();
+         ArrayList<CoughMedicine> list = getCoughList();
 
 
         for (int i = 0; i < list.size(); ++i) {
@@ -196,9 +196,7 @@ public class CoughMed extends javax.swing.JFrame {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, "Decolgenforte", "Phebylpropanolamine ", "For runny nosem sneezing and etc.",  new Integer(6),  new Integer(50)},
-                {null, "Myracof", "Ambroxol", "\"For cough secondary to acute and etc.",  new Integer(50),  new Integer(30)},
-                {null, "Solmux", "Carbocisteine", "For sticky sputum or phlegm and etc.",  new Integer(10),  new Integer(40)}
+
             },
             new String [] {
                 "   ID", "  Brandname", "  Generic name", "   Description", "   Price", "Quantity"

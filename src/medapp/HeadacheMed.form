@@ -195,33 +195,13 @@
             <Component class="javax.swing.JTable" name="table">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="6" rowCount="3">
+                  <Table columnCount="6" rowCount="0">
                     <Column editable="true" title="ID" type="java.lang.Integer"/>
-                    <Column editable="true" title="Brandname" type="java.lang.String">
-                      <Data value="Biogesic"/>
-                      <Data value="Nalfon"/>
-                      <Data value="Bioflu"/>
-                    </Column>
-                    <Column editable="true" title="Generic name" type="java.lang.String">
-                      <Data value="Paracetamol"/>
-                      <Data value="Fenoprofen"/>
-                      <Data value="Penylophrine"/>
-                    </Column>
-                    <Column editable="true" title="Description" type="java.lang.String">
-                      <Data value="For minor aches and etc."/>
-                      <Data value="For mild to moderate pain and etc."/>
-                      <Data value="For clogged nose and etc."/>
-                    </Column>
-                    <Column editable="true" title="Price" type="java.lang.Integer">
-                      <Data value="10"/>
-                      <Data value="100"/>
-                      <Data value="20"/>
-                    </Column>
-                    <Column editable="true" title="Quantity" type="java.lang.Integer">
-                      <Data value="50"/>
-                      <Data value="40"/>
-                      <Data value="30"/>
-                    </Column>
+                    <Column editable="true" title="Brandname" type="java.lang.String"/>
+                    <Column editable="true" title="Generic name" type="java.lang.String"/>
+                    <Column editable="true" title="Description" type="java.lang.String"/>
+                    <Column editable="true" title="Price" type="java.lang.Integer"/>
+                    <Column editable="true" title="Quantity" type="java.lang.Integer"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
