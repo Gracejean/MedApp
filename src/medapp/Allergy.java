@@ -10,7 +10,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -88,7 +90,6 @@ public class Allergy extends javax.swing.JFrame {
         }
         allergy_table.setModel(model);
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -221,8 +222,7 @@ public class Allergy extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void add_cartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_cartActionPerformed
-
-
+        int quan;
         int i = allergy_table.getSelectedRow();
         TableModel model = allergy_table.getModel();
 
@@ -251,7 +251,28 @@ public class Allergy extends javax.swing.JFrame {
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, options1, null);
         if (result == JOptionPane.YES_OPTION) {
-            JOptionPane.showMessageDialog(null, textField.getText());
+//            if (option == JOptionPane.YES_OPTION) {
+
+            String quantIn= textField.getText();
+//            String assignmentsInput = assignmentField.getText();
+//
+            try {
+                quan = Integer.parseInt(quantIn);
+//                assignments = Integer.parseInt(assignmentsInput);
+            } catch (NumberFormatException nfe) {
+                nfe.printStackTrace();
+            }
+
+            panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+
+            panel.add(new JLabel("Brandname: " + model.getValueAt(i, 1).toString()));
+            panel.add(new JLabel("Generic name: " + model.getValueAt(i, 2).toString()));
+            panel.add(new JLabel("Quantity Ordered: " + textField.getText()));
+
+//            JOptionPane.showMessageDialog(frame, pane);
+//        }
+//            JOptionPane.showMessageDialog(null, textField.getText() + " " + model.getValueAt(i, 1).toString());
         }
     }//GEN-LAST:event_add_cartActionPerformed
 
