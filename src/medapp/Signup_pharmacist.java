@@ -223,7 +223,7 @@ public class Signup_pharmacist extends javax.swing.JFrame {
         }else {
             JOptionPane.showMessageDialog(null, "You have successfully logged in!");
             dispose();
-            Medicine m = new Medicine();
+            PharmacistDashboard m = new PharmacistDashboard();
             m.setVisible(true);
             
         }

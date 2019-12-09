@@ -229,7 +229,7 @@ public class Signin_Pharmacist extends javax.swing.JFrame {
                 if (password.equals(pass)) {
                     JOptionPane.showMessageDialog(null, "You have successfully logged in!");
                     dispose();
-                    Medicine m = new Medicine();
+                    PharmacistDashboard m = new PharmacistDashboard();
                     m.setVisible(true);
                     passwordfield.setText("");
                 } else {

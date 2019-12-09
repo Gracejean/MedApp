@@ -244,7 +244,7 @@ public class Signup extends javax.swing.JFrame {
         }else {
             JOptionPane.showMessageDialog(null, "You have successfully logged in!");
             dispose();
-            Order_Medicine m = new Order_Medicine();
+            CustomerDashboard m = new CustomerDashboard();
             m.setVisible(true);
             
         }
