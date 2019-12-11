@@ -164,25 +164,25 @@ public class CustomerDashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_hdacheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hdacheActionPerformed
-        Headache h = new Headache();
+        Order_Headache h = new Order_Headache();
         h.setVisible(true);
         dispose();
     }//GEN-LAST:event_btn_hdacheActionPerformed
 
     private void btn_allergyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_allergyActionPerformed
-        Allergy a = new Allergy();
+        Order_Allergy a = new Order_Allergy();
         a.setVisible(true);
         dispose();
     }//GEN-LAST:event_btn_allergyActionPerformed
 
     private void btn_coughActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_coughActionPerformed
-        Cough c = new Cough();
+        Order_Cough c = new Order_Cough();
         c.setVisible(true);
         dispose();
     }//GEN-LAST:event_btn_coughActionPerformed
 
     private void btn_bypainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_bypainActionPerformed
-        BodyPain b = new BodyPain();
+        Order_BodyPain b = new Order_BodyPain();
         b.setVisible(true);
         dispose();
     }//GEN-LAST:event_btn_bypainActionPerformed

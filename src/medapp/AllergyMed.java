@@ -12,10 +12,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import medapp.Botica.AllergyMedicine;
 
-/**
- *
- * @author 2ndyrGroupB
- */
 public final class AllergyMed extends javax.swing.JFrame {
     
     int quan;
@@ -26,9 +22,7 @@ public final class AllergyMed extends javax.swing.JFrame {
         initComponents();   
         ShowAllergy();
     }
-    /**
-     * Creates new form HeadacheMed
-     */
+   
     public Connection getConnection() {
         Connection con;
         try {

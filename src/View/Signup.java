@@ -1,6 +1,6 @@
 package View;
 
-import Controller.VerifyController;
+import Controller.UserController;
 import javax.swing.JOptionPane;
 
 public class Signup extends javax.swing.JFrame {
@@ -249,7 +249,7 @@ public class Signup extends javax.swing.JFrame {
         String cpassword = String.valueOf(cpasswordfield.getPassword());
 
 
-            VerifyController vc = new VerifyController();
+            UserController vc = new UserController();
          if (vc.validateUser(username, password, age, cpassword) == true) {
             JOptionPane.showMessageDialog(rootPane, "Successfully registered!");
             this.setVisible(false);

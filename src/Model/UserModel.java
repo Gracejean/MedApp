@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 
 
 public class UserModel {
-    public boolean registerCustomer(String username, String password, int age) {
+    public boolean signupUser(String username, String password, int age) {
         Signup s = new Signup();
         boolean registered = false;
         try {

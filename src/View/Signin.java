@@ -1,6 +1,6 @@
 package View;
 
-import Controller.VerifyController;
+import Controller.UserController;
 import medapp.*;
 
 
@@ -200,7 +200,7 @@ public class Signin extends javax.swing.JFrame {
         String username = userfield.getText();
         String password = String.valueOf(passwordfield.getPassword());
 
-        VerifyController vc = new VerifyController();
+        UserController vc = new UserController();
 
         switch (vc.validateSignin(username, password)) {
             case 500:
