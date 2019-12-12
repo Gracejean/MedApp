@@ -17,10 +17,13 @@
         </group>
         <group name="irish">
             <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/medapp/AllergyMed.java</file>
+            <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/View/Cart.java</file>
             <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/View/BodyPainMed.java</file>
+            <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/Model/UserModel.java</file>
             <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/View/AllergyMed.java</file>
-            <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/Controller/PharmacistController.java</file>
-            <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/Model/PharmacistModel.java</file>
+            <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/View/Order_Allergy.java</file>
+            <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/Model/Botica.java</file>
+            <file>file:/C:/Users/2ndyrGroupB/Desktop/Mendoza/MedApp/src/Model/Order.java</file>
         </group>
     </open-files>
 </project-private>

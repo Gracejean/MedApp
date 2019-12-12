@@ -16,9 +16,6 @@ public class Order {
         this.price = price;
         this.total = total;
     }
-//
-//    public Order() {
-//    }
 
     public int getId() {
         return id;
