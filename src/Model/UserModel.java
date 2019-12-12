@@ -10,6 +10,8 @@ import javax.swing.JOptionPane;
 import View.Signup;
 import java.awt.HeadlessException;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+
 
 
 public class UserModel {
@@ -63,6 +65,31 @@ public class UserModel {
         }
         return success;
     }
+    
+    public ArrayList<Botica.AllergyMedicine> getAllergyList() {
+        ArrayList<Botica.AllergyMedicine> allergyList = new ArrayList<>();
+        
 
+        String query = "Select* From `allergy`";
+        Statement st;
+        ResultSet rs;
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            Botica.AllergyMedicine allergy;
+
+            while (rs.next()) {
+                Botica b = new Botica();
+                allergy = b.new AllergyMedicine(rs.getInt("Id"), rs.getString("Brandname"), rs.getString("Generic name"), rs.getString("Description"), rs.getInt("Price"), rs.getInt("Quantity in Stock"));
+                allergyList.add(allergy);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return allergyList;
+    }
 
 }

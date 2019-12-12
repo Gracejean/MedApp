@@ -28,10 +28,7 @@ public class UserController {
         } else if (!password.equals(cpassword)) {
             JOptionPane.showMessageDialog(null, "mismatched password");
         } else {
-//            
-//           if(state.pharmacist() == true){
-//               
-//           }
+
             try {
 
                 Class.forName("com.mysql.jdbc.Driver");
@@ -66,5 +63,7 @@ public class UserController {
         int success = 400;
         return u.signin(username, password);
     }
+    
+//    public boolean purchase
 
 }

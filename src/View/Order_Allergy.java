@@ -1,5 +1,5 @@
 
-package medapp;
+package View;
 
 import java.awt.GridLayout;
 import java.sql.*;
@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.util.Date;
+import Model.Botica;
+import Model.UserModel;
 
 
 public class Order_Allergy extends javax.swing.JFrame {
@@ -24,47 +26,47 @@ public class Order_Allergy extends javax.swing.JFrame {
         ShowAllergy();
     }
 
-    public Connection getConnection() {
-        Connection con;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
-            return con;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    public Connection getConnection() {
+//        Connection con;
+//        try {
+//            Class.forName("com.mysql.jdbc.Driver");
+//            con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
+//            return con;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
-    public ArrayList<Botica.AllergyMedicine> getAllergyList() {
-        ArrayList<Botica.AllergyMedicine> allergyList = new ArrayList<>();
-        Connection connection = getConnection();
-
-        String query = "Select* From `allergy`";
-        Statement st;
-        ResultSet rs;
-
-        try {
-            st = connection.createStatement();
-            rs = st.executeQuery(query);
-            Botica.AllergyMedicine allergy;
-
-            while (rs.next()) {
-                Botica b = new Botica();
-                allergy = b.new AllergyMedicine(rs.getInt("Id"), rs.getString("Brandname"), rs.getString("Generic name"), rs.getString("Description"), rs.getInt("Price"), rs.getInt("Quantity in Stock"));
-                allergyList.add(allergy);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
-        return allergyList;
-    }
+//    public ArrayList<Botica.AllergyMedicine> getAllergyList() {
+//        ArrayList<Botica.AllergyMedicine> allergyList = new ArrayList<>();
+//        Connection connection = getConnection();
+//
+//        String query = "Select* From `allergy`";
+//        Statement st;
+//        ResultSet rs;
+//
+//        try {
+//            st = connection.createStatement();
+//            rs = st.executeQuery(query);
+//            Botica.AllergyMedicine allergy;
+//
+//            while (rs.next()) {
+//                Botica b = new Botica();
+//                allergy = b.new AllergyMedicine(rs.getInt("Id"), rs.getString("Brandname"), rs.getString("Generic name"), rs.getString("Description"), rs.getInt("Price"), rs.getInt("Quantity in Stock"));
+//                allergyList.add(allergy);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//
+//        }
+//        return allergyList;
+//    }
 
     public void ShowAllergy() {
-
+        UserModel u = new UserModel();
         DefaultTableModel model = (DefaultTableModel) allergy_table.getModel();
-        ArrayList<Botica.AllergyMedicine> list = getAllergyList();
+        ArrayList<Botica.AllergyMedicine> list = u.getAllergyList();
 
         for (int i = 0; i < list.size(); ++i) {
             Object[] row = new Object[6];
@@ -254,12 +256,13 @@ public class Order_Allergy extends javax.swing.JFrame {
                 quan = Integer.parseInt(q);
                 price = Integer.parseInt(p);
                 amount = price * quan;
+                JOptionPane.showMessageDialog(null, "☺☺☺--MEDAPP RECEIPT--☺☺☺" + "\n\n" + "Issued: " + strDate + "\n" + "Brandname: " + model.getValueAt(i, 1).toString() + "\n" + "Generic name: " + model.getValueAt(i, 2).toString() + "\n" + "Quantity: " + textField.getText() + "\n" + "Price: " + model.getValueAt(i, 4).toString() + "\n" + "Total amount: " + amount + "\n\n" + "☺☺-THANK FOR PURCHASING-☺☺");
             } catch (NumberFormatException nfe) {
                 nfe.printStackTrace();
             }
             
 
-            JOptionPane.showMessageDialog(null, "☺☺☺--MEDAPP RECEIPT--☺☺☺" + "\n\n" + "Issued: " + strDate + "\n" + "Brandname: " + model.getValueAt(i, 1).toString() + "\n" + "Generic name: " + model.getValueAt(i, 2).toString() + "\n" + "Quantity: " + textField.getText() + "\n" + "Price: " + model.getValueAt(i, 4).toString() + "\n" + "Total amount: " + amount + "\n\n" + "☺☺-THANK FOR PURCHASING-☺☺");
+//            JOptionPane.showMessageDialog(null, "☺☺☺--MEDAPP RECEIPT--☺☺☺" + "\n\n" + "Issued: " + strDate + "\n" + "Brandname: " + model.getValueAt(i, 1).toString() + "\n" + "Generic name: " + model.getValueAt(i, 2).toString() + "\n" + "Quantity: " + textField.getText() + "\n" + "Price: " + model.getValueAt(i, 4).toString() + "\n" + "Total amount: " + amount + "\n\n" + "☺☺-THANK FOR PURCHASING-☺☺");
         }
     }//GEN-LAST:event_add_cartActionPerformed
 
@@ -292,6 +295,10 @@ public class Order_Allergy extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Order_Allergy.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
