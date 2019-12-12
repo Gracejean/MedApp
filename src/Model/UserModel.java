@@ -75,6 +75,7 @@ public class UserModel {
         ResultSet rs;
 
         try {
+            Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
             st = con.createStatement();
             rs = st.executeQuery(query);
@@ -91,5 +92,12 @@ public class UserModel {
         }
         return allergyList;
     }
+    
+//    public boolean purchase(Order order){
+//        boolean success;
+//        boolean exist;
+//        
+//        
+//    }
 
 }
