@@ -2,20 +2,32 @@ package Model;
 
 
 public class Order {
+    private int id;
     private String type;
     private String brandname;
     private int quan;
     private int price;
     private int total;
 
-    public Order(String type, String brandname, int quan, int price, int total) {
+    public Order(int id, String type, String brandname, int quan, int price, int total) {
         this.type = type;
         this.brandname = brandname;
         this.quan = quan;
         this.price = price;
         this.total = total;
     }
+//
+//    public Order() {
+//    }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public int getQuan() {
         return quan;
     }

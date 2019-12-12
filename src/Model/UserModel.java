@@ -1,4 +1,3 @@
-
 package Model;
 
 import View.Signin;
@@ -11,10 +10,10 @@ import View.Signup;
 import java.awt.HeadlessException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
-
+//import Model.Order;
 
 public class UserModel {
+
     public boolean signupUser(String username, String password, int age) {
         Signup s = new Signup();
         boolean registered = false;
@@ -26,14 +25,14 @@ public class UserModel {
             String sql = "INSERT INTO `customers`(`username`,  `password`, `age`) VALUES ('" + username + "','" + password + "'," + age + ")";
             stmt.executeUpdate(sql);
             con.close();
-            registered= true;
+            registered = true;
             System.out.println("Successful");
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(s, "Cannot connect to database!", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return registered;
     }
-    
+
     public int signin(String username, String password) {
         Signin signin = new Signin();
         int success = 400;
@@ -65,10 +64,9 @@ public class UserModel {
         }
         return success;
     }
-    
+
     public ArrayList<Botica.AllergyMedicine> getAllergyList() {
         ArrayList<Botica.AllergyMedicine> allergyList = new ArrayList<>();
-        
 
         String query = "Select* From `allergy`";
         Statement st;
@@ -92,12 +90,37 @@ public class UserModel {
         }
         return allergyList;
     }
-    
+
+    public ArrayList<Order> getOrder() {
+        ArrayList<Order> orderList = new ArrayList<>();
+        
+        String query = "Select From 'purchase'";
+        Statement st;
+        ResultSet rs;
+        
+        try {
+            Class.forName("com.msql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            Order order;
+            
+            while(rs.next()){
+                Order o = new Order();
+                order = Order(rs.getInt("id"),rs.getString("type"),rs.getString("brandname"), rs.getInt("price"), rs.getInt("quantity"), rs.getInt("total") );
+            }
+
+        } catch (Exception e) {
+
+        }
+    }
+
 //    public boolean purchase(Order order){
 //        boolean success;
 //        boolean exist;
 //        
 //        
 //    }
+
 
 }

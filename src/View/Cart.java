@@ -1,12 +1,37 @@
 
 package View;
 
+import Model.Botica;
+import Model.UserModel;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 
 public class Cart extends javax.swing.JFrame {
 
     
     public Cart() {
         initComponents();
+    }
+    
+        public void ShowAllergy() {
+        UserModel u = new UserModel();
+        DefaultTableModel model = (DefaultTableModel) order_table.getModel();
+        ArrayList<Botica.AllergyMedicine> list = u.getAllergyList();
+
+        for (int i = 0; i < list.size(); ++i) {
+            Object[] row = new Object[6];
+
+            row[0] = list.get(i).getId();
+            row[1] = list.get(i).getBrandname();
+            row[2] = list.get(i).getGenericname();
+            row[3] = list.get(i).getDescription();
+            row[4] = list.get(i).getPrice();
+            row[5] = list.get(i).getQuantity();
+
+            model.addRow(row);
+        }
+        order_table.setModel(model);
     }
 
 
@@ -53,11 +78,11 @@ public class Cart extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Type", "Brandname", "Generic name", "Price", "Quantity", "Total"
+                "Type", "Brandname", "Price", "Quantity", "Total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
