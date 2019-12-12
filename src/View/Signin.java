@@ -1,7 +1,6 @@
 package View;
 
 import Controller.UserController;
-import medapp.*;
 
 
 import javax.swing.JOptionPane;

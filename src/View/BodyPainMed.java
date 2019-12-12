@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package View;
 
 import Controller.PharmacistController;
@@ -348,7 +344,7 @@ public class BodyPainMed extends javax.swing.JFrame {
         quantity = quan_in.getText();
 
         PharmacistController pc = new PharmacistController();
-        if (pc.addBodypain(brandname, genericname, description, price, quantity) == true) {
+        if (pc.checkBodypain(brandname, genericname, description, price, quantity) == true) {
 
             JOptionPane.showMessageDialog(rootPane, "BodyPain Medicine Added Successfully!");
             this.setVisible(false);
