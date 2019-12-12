@@ -2,7 +2,6 @@
 package View;
 
 import java.awt.GridLayout;
-import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -26,42 +25,6 @@ public class Order_Allergy extends javax.swing.JFrame {
         ShowAllergy();
     }
 
-//    public Connection getConnection() {
-//        Connection con;
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//            con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
-//            return con;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-
-//    public ArrayList<Botica.AllergyMedicine> getAllergyList() {
-//        ArrayList<Botica.AllergyMedicine> allergyList = new ArrayList<>();
-//        Connection connection = getConnection();
-//
-//        String query = "Select* From `allergy`";
-//        Statement st;
-//        ResultSet rs;
-//
-//        try {
-//            st = connection.createStatement();
-//            rs = st.executeQuery(query);
-//            Botica.AllergyMedicine allergy;
-//
-//            while (rs.next()) {
-//                Botica b = new Botica();
-//                allergy = b.new AllergyMedicine(rs.getInt("Id"), rs.getString("Brandname"), rs.getString("Generic name"), rs.getString("Description"), rs.getInt("Price"), rs.getInt("Quantity in Stock"));
-//                allergyList.add(allergy);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//
-//        }
-//        return allergyList;
-//    }
 
     public void ShowAllergy() {
         UserModel u = new UserModel();
@@ -101,6 +64,7 @@ public class Order_Allergy extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         allergy_table = new javax.swing.JTable();
         add_cart = new javax.swing.JButton();
+        btn_back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -158,6 +122,13 @@ public class Order_Allergy extends javax.swing.JFrame {
             }
         });
 
+        btn_back.setText("Back");
+        btn_back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_backActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -171,7 +142,9 @@ public class Order_Allergy extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(210, 210, 210)
+                        .addGap(145, 145, 145)
+                        .addComponent(btn_back)
+                        .addGap(68, 68, 68)
                         .addComponent(add_cart)))
                 .addGap(802, 802, 802)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -195,7 +168,9 @@ public class Order_Allergy extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(add_cart)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(add_cart)
+                            .addComponent(btn_back))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -270,6 +245,12 @@ public class Order_Allergy extends javax.swing.JFrame {
 
     }//GEN-LAST:event_allergy_tableMouseClicked
 
+    private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
+        CustomerDashboard c = new CustomerDashboard();
+        c.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btn_backActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -315,6 +296,7 @@ public class Order_Allergy extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_cart;
     private javax.swing.JTable allergy_table;
+    private javax.swing.JButton btn_back;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
