@@ -5,10 +5,16 @@ import medapp.*;
 
 
 public class CustomerDashboard extends javax.swing.JFrame {
-
+    
+    String bhe;
     
     public CustomerDashboard() {
         initComponents();
+    }
+    
+    public CustomerDashboard(String username) {
+        initComponents();
+        bhe = username;
     }
 
 
@@ -54,6 +60,14 @@ public class CustomerDashboard extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
+
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\mendozaje_sd2022\\Desktop\\images\\h1.jpg")); // NOI18N
+
+        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\mendozaje_sd2022\\Desktop\\images\\a1.jpg")); // NOI18N
+
+        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\mendozaje_sd2022\\Desktop\\images\\c1.jpg")); // NOI18N
+
+        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\mendozaje_sd2022\\Desktop\\images\\b1.jpg")); // NOI18N
 
         btn_hdache.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btn_hdache.setText("Headache");
@@ -102,8 +116,8 @@ public class CustomerDashboard extends javax.swing.JFrame {
                 .addGap(44, 44, 44)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -153,7 +167,7 @@ public class CustomerDashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_hdacheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hdacheActionPerformed
-        Order_Headache h = new Order_Headache();
+        Order_Headache h = new Order_Headache(bhe);
         h.setVisible(true);
         dispose();
     }//GEN-LAST:event_btn_hdacheActionPerformed
@@ -212,6 +226,7 @@ public class CustomerDashboard extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new CustomerDashboard().setVisible(true);
             }

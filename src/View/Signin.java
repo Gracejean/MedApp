@@ -209,7 +209,7 @@ public class Signin extends javax.swing.JFrame {
                 break;
             case 600:
                 this.setVisible(false);
-                new CustomerDashboard().setVisible(true);
+                new CustomerDashboard(username).setVisible(true);
                 JOptionPane.showMessageDialog(rootPane, "WELCOME " + username + "!");
                 break;
             default:

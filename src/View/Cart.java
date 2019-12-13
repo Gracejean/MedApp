@@ -1,31 +1,106 @@
 package View;
 
+import Controller.UserController;
 import Model.Order;
-import Model.UserModel;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Cart extends javax.swing.JFrame {
 
+    UserController control = new UserController();
+    Order o = new Order();
+    int total = 0;
+    String bhe;
+
     public Cart() {
         initComponents();
-        ShowOrder();
+        showOrder();
     }
 
-    public void ShowOrder() {
-        UserModel u = new UserModel();
-        DefaultTableModel model = (DefaultTableModel) order_table.getModel();
-        ArrayList<Order> list = u.getOrder();
+    public Cart(String username) {
+        initComponents();
+        showOrder();
+        bhe = username;
+        System.out.println(bhe);
+        System.out.println(bhe);
+    }
 
-        for (int i = 0; i < list.size(); ++i) {
-            Object[] row = new Object[5];
+    public Connection getConnection() {
+        Connection con;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
+            return con;
+        } catch (ClassNotFoundException | SQLException e) {
+            return null;
+        }
+    }
 
+    public ArrayList<Order> getMedicinesList() {
+        ArrayList<Order> itemsList = new ArrayList<>();
+        try {
+
+            Connection connection = getConnection();
+            String query = "SELECT * FROM `purchase`";
+            Statement st;
+            st = connection.createStatement();
+            Order items;
+            //System.out.println(items);
+            System.out.println("bhe");
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                int bhenako = rs.getInt("total");
+                int id = rs.getInt("id");
+                String bname = rs.getString("brandname");
+                int price = rs.getInt("price");
+                int qty = rs.getInt("quantity");
+                items = new Order(id, bname, price, qty, bhenako);
+                itemsList.add(items);
+                total = bhenako;
+                ResultSet rs1 = st.executeQuery("SELECT * FROM `customers` WHERE username='" + bhe + "'");
+                System.out.println("nagbasa sa babaw sa items");
+                System.out.println("nagbasa sa while");
+                System.out.println(bhe);
+                System.out.println("BHEBHE: "+bhe);
+                if (rs1.next()) {
+                    int age = rs1.getInt("age");
+                    System.out.println("basa sa age");
+                    if (age >= 18 && age <= 59) {
+
+                    } else {
+                        double minus = total * .20;
+                        total = (int) (total - minus);
+                    }
+                }
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return itemsList;
+    }
+
+    public void showOrder() {
+
+        ArrayList<Order> list;
+        DefaultTableModel model;
+        Object[] row;
+
+        list = getMedicinesList();
+        model = (DefaultTableModel) order_table.getModel();
+        row = new Object[5];
+        for (int i = 0; i < list.size(); i++) {
             row[0] = list.get(i).getId();
             row[1] = list.get(i).getBrandname();
             row[2] = list.get(i).getPrice();
             row[3] = list.get(i).getQuantity();
             row[4] = list.get(i).getTotal();
-
             model.addRow(row);
         }
         order_table.setModel(model);
@@ -40,7 +115,6 @@ public class Cart extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         order_table = new javax.swing.JTable();
-        btn_cancel = new javax.swing.JButton();
         btn_order = new javax.swing.JButton();
         btn_back = new javax.swing.JButton();
 
@@ -88,14 +162,7 @@ public class Cart extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(order_table);
 
-        btn_cancel.setText("Cancel");
-        btn_cancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_cancelActionPerformed(evt);
-            }
-        });
-
-        btn_order.setText("Order");
+        btn_order.setText("Pay");
         btn_order.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_orderActionPerformed(evt);
@@ -115,12 +182,10 @@ public class Cart extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(119, 119, 119)
+                .addGap(178, 178, 178)
                 .addComponent(btn_back)
-                .addGap(59, 59, 59)
+                .addGap(53, 53, 53)
                 .addComponent(btn_order)
-                .addGap(52, 52, 52)
-                .addComponent(btn_cancel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(20, Short.MAX_VALUE)
@@ -136,7 +201,6 @@ public class Cart extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_cancel)
                     .addComponent(btn_order)
                     .addComponent(btn_back))
                 .addContainerGap(22, Short.MAX_VALUE))
@@ -156,18 +220,22 @@ public class Cart extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_cancelActionPerformed
-
     private void btn_orderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_orderActionPerformed
-        
+        System.out.println(total);
+        if (control.removeItem(total) == true) {
+            JOptionPane.showMessageDialog(null, "Thank you and please come again!");
+            total = 0;
+            Signin a = new Signin();
+            a.setVisible(true);
+            this.setVisible(false);
+        }
+
     }//GEN-LAST:event_btn_orderActionPerformed
 
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
-       CustomerDashboard c = new CustomerDashboard();
-       c.setVisible(true);
-       dispose();
+        CustomerDashboard c = new CustomerDashboard(bhe);
+        c.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btn_backActionPerformed
 
     /**
@@ -199,6 +267,7 @@ public class Cart extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Cart().setVisible(true);
             }
@@ -207,7 +276,6 @@ public class Cart extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_back;
-    private javax.swing.JButton btn_cancel;
     private javax.swing.JButton btn_order;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

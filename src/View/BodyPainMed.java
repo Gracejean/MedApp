@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import View.Botica1.BodypainMedicine;
+import Model.Botica.BodypainMedicine;
+import Model.Botica;
 
 public class BodyPainMed extends javax.swing.JFrame {
 
@@ -48,7 +49,7 @@ public class BodyPainMed extends javax.swing.JFrame {
             BodypainMedicine bodypain;
 
             while (rs.next()) {
-                Botica1 b = new Botica1();
+                Botica b = new Botica();
                 bodypain = b.new BodypainMedicine(rs.getInt("Id"), rs.getString("Brandname"), rs.getString("Generic name"), rs.getString("Description"), rs.getInt("Price"), rs.getInt("Quantity in Stock"));
                 bodypainList.add(bodypain);
             }

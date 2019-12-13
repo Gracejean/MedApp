@@ -17,6 +17,11 @@ public class Order {
         this.total = total;
     }
 
+    public Order() {
+    }
+
+
+
     public int getId() {
         return id;
     }

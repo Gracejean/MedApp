@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 public class UserController {
 
     UserModel u = new UserModel();
-    State state = new State();
 
     public boolean validateUser(String username, String password, String age, String cpassword) {
         Signup s = new Signup();
@@ -64,6 +63,11 @@ public class UserController {
         return u.signin(username, password);
     }
     
-//    public boolean purchase
+    public boolean removeItem(int total) {
+        System.out.println("reads");
+        JOptionPane.showMessageDialog(null, "You will pay for " + total);
+        return (u.removeItem());
+    }
+    
 
 }
