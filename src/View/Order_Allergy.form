@@ -157,7 +157,7 @@
                     <Column editable="true" title="Generic name" type="java.lang.String"/>
                     <Column editable="true" title="Description" type="java.lang.String"/>
                     <Column editable="true" title="Price" type="java.lang.Integer"/>
-                    <Column editable="true" title="Quantitiy " type="java.lang.String"/>
+                    <Column editable="true" title="Quantitiy " type="java.lang.Integer"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

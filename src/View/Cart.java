@@ -1,39 +1,35 @@
-
 package View;
 
-import Model.Botica;
+import Model.Order;
 import Model.UserModel;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
-
 public class Cart extends javax.swing.JFrame {
 
-    
     public Cart() {
         initComponents();
+        ShowOrder();
     }
-    
-        public void ShowAllergy() {
+
+    public void ShowOrder() {
         UserModel u = new UserModel();
         DefaultTableModel model = (DefaultTableModel) order_table.getModel();
-        ArrayList<Botica.AllergyMedicine> list = u.getAllergyList();
+        ArrayList<Order> list = u.getOrder();
 
         for (int i = 0; i < list.size(); ++i) {
-            Object[] row = new Object[6];
+            Object[] row = new Object[5];
 
             row[0] = list.get(i).getId();
             row[1] = list.get(i).getBrandname();
-            row[2] = list.get(i).getGenericname();
-            row[3] = list.get(i).getDescription();
-            row[4] = list.get(i).getPrice();
-            row[5] = list.get(i).getQuantity();
+            row[2] = list.get(i).getPrice();
+            row[3] = list.get(i).getQuantity();
+            row[4] = list.get(i).getTotal();
 
             model.addRow(row);
         }
         order_table.setModel(model);
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -46,6 +42,7 @@ public class Cart extends javax.swing.JFrame {
         order_table = new javax.swing.JTable();
         btn_cancel = new javax.swing.JButton();
         btn_order = new javax.swing.JButton();
+        btn_back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,11 +75,11 @@ public class Cart extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Type", "Brandname", "Price", "Quantity", "Total"
+                "Id", "Brandname", "Price", "Quantity", "Total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -105,16 +102,25 @@ public class Cart extends javax.swing.JFrame {
             }
         });
 
+        btn_back.setText("Back");
+        btn_back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_backActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(176, 176, 176)
-                .addComponent(btn_cancel)
-                .addGap(58, 58, 58)
+                .addGap(119, 119, 119)
+                .addComponent(btn_back)
+                .addGap(59, 59, 59)
                 .addComponent(btn_order)
+                .addGap(52, 52, 52)
+                .addComponent(btn_cancel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(20, Short.MAX_VALUE)
@@ -131,8 +137,9 @@ public class Cart extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cancel)
-                    .addComponent(btn_order))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(btn_order)
+                    .addComponent(btn_back))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -154,8 +161,14 @@ public class Cart extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cancelActionPerformed
 
     private void btn_orderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_orderActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btn_orderActionPerformed
+
+    private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
+       CustomerDashboard c = new CustomerDashboard();
+       c.setVisible(true);
+       dispose();
+    }//GEN-LAST:event_btn_backActionPerformed
 
     /**
      * @param args the command line arguments
@@ -193,6 +206,7 @@ public class Cart extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_back;
     private javax.swing.JButton btn_cancel;
     private javax.swing.JButton btn_order;
     private javax.swing.JLabel jLabel1;

@@ -14,6 +14,7 @@ public final class AllergyMed extends javax.swing.JFrame {
     static String id, brandname, genericname, description, price, quantity;
 
     int quan;
+    String type = "allergy";
 //    int price;
     int amount;
 
@@ -334,22 +335,24 @@ public final class AllergyMed extends javax.swing.JFrame {
     }//GEN-LAST:event_price_inActionPerformed
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-
         brandname = brand_in.getText();
         genericname = gen_in.getText();
         description = des_in.getText();
         price = price_in.getText();
         quantity = quan_in.getText();
+        
+
 
         PharmacistController pc = new PharmacistController();
-        if (pc.checkAllergy(brandname, genericname, description, price, quantity) == true) {
-
+        if (pc.checkMedicine(brandname, genericname, description, price, quantity, type) == true) {
+            
             JOptionPane.showMessageDialog(rootPane, "Allergy Medicine Added Successfully!");
             this.setVisible(false);
             new AllergyMed().setVisible(true);
 
         } else {
             JOptionPane.showMessageDialog(rootPane, "Allergy Medicine Added Failed");
+            System.out.println(type);
         }
 
     }//GEN-LAST:event_btn_addActionPerformed
@@ -367,7 +370,7 @@ public final class AllergyMed extends javax.swing.JFrame {
         quantity = quan_in.getText();
 
         PharmacistController pc = new PharmacistController();
-        if (pc.checkUpAllergy(id,brandname, genericname, description, price, quantity) == true) {
+        if (pc.checkUpdateMedicine(id,brandname, genericname, description, price, quantity, type) == true) {
 
             JOptionPane.showMessageDialog(rootPane, "Allergy Medicine Updated Successfully!");
             this.setVisible(false);
@@ -395,7 +398,7 @@ public final class AllergyMed extends javax.swing.JFrame {
 
         PharmacistController pc = new PharmacistController();
 
-        if (pc.checkDelAllergy(id) == true) {
+        if (pc.checkDelMedicine(id, type) == true) {
             JOptionPane.showMessageDialog(rootPane, "Medicine Deleted Successfully!");
             this.setVisible(false);
             new AllergyMed().setVisible(true);

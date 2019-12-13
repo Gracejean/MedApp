@@ -15,6 +15,7 @@ import Model.Botica;
 public class CoughMed extends javax.swing.JFrame {
 
     static String id, brandname, genericname, description, price, quantity;
+    String type = "cough";
 
     public CoughMed() {
         initComponents();
@@ -353,9 +354,10 @@ public class CoughMed extends javax.swing.JFrame {
         description = des_in.getText();
         price = price_in.getText();
         quantity = quan_in.getText();
+        
 
         PharmacistController pc = new PharmacistController();
-        if (pc.checkCough(brandname, genericname, description, price, quantity) == true) {
+        if (pc.checkMedicine(brandname, genericname, description, price, quantity, type) == true) {
 
             JOptionPane.showMessageDialog(rootPane, "Cough Medicine Added Successfully!");
             this.setVisible(false);
@@ -380,14 +382,14 @@ public class CoughMed extends javax.swing.JFrame {
         quantity = quan_in.getText();
 
         PharmacistController pc = new PharmacistController();
-        if (pc.checkUpCough(id, brandname, genericname, description, price, quantity) == true) {
+        if (pc.checkUpdateMedicine(id, brandname, genericname, description, price, quantity, type) == true) {
 
-            JOptionPane.showMessageDialog(rootPane, "Allergy Medicine Updated Successfully!");
+            JOptionPane.showMessageDialog(rootPane, "Cough Medicine Updated Successfully!");
             this.setVisible(false);
             new CoughMed().setVisible(true);
 
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Allergy Medicine Updated Failed");
+            JOptionPane.showMessageDialog(rootPane, "Cough Medicine Updated Failed");
         }
     }//GEN-LAST:event_btn_updateActionPerformed
 
@@ -396,7 +398,7 @@ public class CoughMed extends javax.swing.JFrame {
 
         PharmacistController pc = new PharmacistController();
 
-        if (pc.checkDelCough(id) == true) {
+        if (pc.checkDelMedicine(id, type) == true) {
             JOptionPane.showMessageDialog(rootPane, "Medicine Deleted Successfully!");
             this.setVisible(false);
             new CoughMed().setVisible(true);

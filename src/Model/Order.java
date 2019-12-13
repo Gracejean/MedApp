@@ -2,18 +2,18 @@ package Model;
 
 
 public class Order {
+
     private int id;
-    private String type;
     private String brandname;
-    private int quan;
+    private int quantity;
     private int price;
     private int total;
 
-    public Order(int id, String type, String brandname, int quan, int price, int total) {
-        this.type = type;
+    public Order(int id, String brandname, int price, int quantity, int total) {
+        this.id = id;
         this.brandname = brandname;
-        this.quan = quan;
         this.price = price;
+        this.quantity = quantity;
         this.total = total;
     }
 
@@ -23,14 +23,6 @@ public class Order {
 
     public void setId(int id) {
         this.id = id;
-    }
-    
-    public int getQuan() {
-        return quan;
-    }
-
-    public void setQuan(int quan) {
-        this.quan = quan;
     }
 
     public int getPrice() {
@@ -49,14 +41,6 @@ public class Order {
         this.total = total;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getBrandname() {
         return brandname;
     }
@@ -64,7 +48,13 @@ public class Order {
     public void setBrandname(String brandname) {
         this.brandname = brandname;
     }
-    
-    
-    
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuan(int quantity) {
+        this.quantity = quantity;
+    }
+
 }

@@ -15,6 +15,7 @@ import View.Botica1.BodypainMedicine;
 public class BodyPainMed extends javax.swing.JFrame {
 
     static String id, brandname, genericname, description, price, quantity;
+    String type = "bodypain";
 
     public BodyPainMed() {
         initComponents();
@@ -339,9 +340,10 @@ public class BodyPainMed extends javax.swing.JFrame {
         description = des_in.getText();
         price = price_in.getText();
         quantity = quan_in.getText();
+        
 
         PharmacistController pc = new PharmacistController();
-        if (pc.checkBodypain(brandname, genericname, description, price, quantity) == true) {
+        if (pc.checkMedicine(brandname, genericname, description, price, quantity, type) == true) {
 
             JOptionPane.showMessageDialog(rootPane, "BodyPain Medicine Added Successfully!");
             this.setVisible(false);
@@ -365,7 +367,7 @@ public class BodyPainMed extends javax.swing.JFrame {
         quantity = quan_in.getText();
 
         PharmacistController pc = new PharmacistController();
-        if (pc.checkUpBodypain(id,brandname, genericname, description, price, quantity) == true) {
+        if (pc.checkUpdateMedicine(id,brandname, genericname, description, price, quantity, type) == true) {
 
             JOptionPane.showMessageDialog(rootPane, "Medicine Updated Successfully!");
             this.setVisible(false);
@@ -381,7 +383,7 @@ public class BodyPainMed extends javax.swing.JFrame {
 
         PharmacistController pc = new PharmacistController();
 
-        if (pc.checkDelBodypain(id) == true) {
+        if (pc.checkDelMedicine(id, type) == true) {
             JOptionPane.showMessageDialog(rootPane, "Medicine Deleted Successfully!");
             this.setVisible(false);
             new BodyPainMed().setVisible(true);

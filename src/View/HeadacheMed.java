@@ -15,6 +15,7 @@ import Model.Botica;
 public class HeadacheMed extends javax.swing.JFrame {
 
     static String id, brandname, genericname, description, price, quantity;
+    String type = "headache";
 
     public HeadacheMed() {
         initComponents();
@@ -348,16 +349,17 @@ public class HeadacheMed extends javax.swing.JFrame {
         description = des_in.getText();
         price = price_in.getText();
         quantity = quan_in.getText();
+        
 
         PharmacistController pc = new PharmacistController();
-        if (pc.checkHeadache(brandname, genericname, description, price, quantity) == true) {
+        if (pc.checkMedicine(brandname, genericname, description, price, quantity, type) == true) {
 
-            JOptionPane.showMessageDialog(rootPane, "Cough Medicine Added Successfully!");
+            JOptionPane.showMessageDialog(rootPane, "Headache Medicine Added Successfully!");
             this.setVisible(false);
             new HeadacheMed().setVisible(true);
 
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Cough Medicine Added Failed");
+            JOptionPane.showMessageDialog(rootPane, "Headache  Medicine Added Failed");
         }
 
     }//GEN-LAST:event_btn_addActionPerformed
@@ -375,14 +377,14 @@ public class HeadacheMed extends javax.swing.JFrame {
         quantity = quan_in.getText();
 
         PharmacistController pc = new PharmacistController();
-        if (pc.checkUpHeadache(id, brandname, genericname, description, price, quantity) == true) {
+        if (pc.checkUpdateMedicine(id, brandname, genericname, description, price, quantity, type) == true) {
 
-            JOptionPane.showMessageDialog(rootPane, "Allergy Medicine Updated Successfully!");
+            JOptionPane.showMessageDialog(rootPane, "Headache Medicine Updated Successfully!");
             this.setVisible(false);
             new HeadacheMed().setVisible(true);
 
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Allergy Medicine Updated Failed");
+            JOptionPane.showMessageDialog(rootPane, "Headache Medicine Updated Failed");
         }
     }//GEN-LAST:event_btn_updateActionPerformed
 
@@ -391,7 +393,7 @@ public class HeadacheMed extends javax.swing.JFrame {
 
         PharmacistController pc = new PharmacistController();
 
-        if (pc.checkDelHeadache(id) == true) {
+        if (pc.checkDelMedicine(id, type) == true) {
             JOptionPane.showMessageDialog(rootPane, "Medicine Deleted Successfully!");
             this.setVisible(false);
             new HeadacheMed().setVisible(true);

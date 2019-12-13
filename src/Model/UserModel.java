@@ -95,19 +95,19 @@ public class UserModel {
     public ArrayList<Order> getOrder() {
         ArrayList<Order> orderList = new ArrayList<>();
 
-        String query = "Select From 'purchase'";
+        String query = "Select* From `purchase`";
         Statement st;
         ResultSet rs;
 
         try {
-            Class.forName("com.msql.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
             st = con.createStatement();
             rs = st.executeQuery(query);
             Order order;
 
             while (rs.next()) {
-                order = new Order(rs.getInt("id"), rs.getString("type"), rs.getString("brandname"), rs.getInt("price"), rs.getInt("quantity"), rs.getInt("total"));
+                order = new Order(rs.getInt("id"), rs.getString("brandname"), rs.getInt("price"), rs.getInt("quantity"), rs.getInt("total"));
                 orderList.add(order);
             }
 
@@ -117,23 +117,23 @@ public class UserModel {
         return orderList;
     }
 
-    public boolean purchase(int id, String type, String brandname, int price, int quantity, int total) {
-        Cart c = new Cart();
-        boolean cart = false;
-        try {
-            Statement stmt = null;
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
-            stmt = con.createStatement();
-            String sql = "INSERT INTO `purchase`(`type`, `brandname`, `price`, `quantity`, `total`) VALUES ('" + type + "','" + brandname + "'," + price + ")";
-            stmt.executeUpdate(sql);
-            con.close();
-            registered = true;
-            System.out.println("Successful");
-        } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(s, "Cannot connect to database!", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        return registered;
-    }
+//    public boolean purchase(int id, String type, String brandname, int price, int quantity, int total) {
+//        Cart c = new Cart();
+//        boolean cart = false;
+//        try {
+//            Statement stmt = null;
+//            Class.forName("com.mysql.jdbc.Driver");
+//            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/medapp", "root", "");
+//            stmt = con.createStatement();
+//            String sql = "INSERT INTO `purchase`(`type`, `brandname`, `price`, `quantity`, `total`) VALUES ('" + type + "','" + brandname + "','" + price + "', '" + quantity + "', '" + total + "')";
+//            stmt.executeUpdate(sql);
+//            con.close();
+//            cart = true;
+//            System.out.println("Successful");
+//        } catch (ClassNotFoundException | SQLException e) {
+//            JOptionPane.showMessageDialog(c, "Cannot connect to database!", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//        return cart;
+//    }
 
 }
