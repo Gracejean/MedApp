@@ -1,4 +1,3 @@
-
 package View;
 
 import Controller.PharmacistController;
@@ -14,7 +13,7 @@ import View.Botica1.BodypainMedicine;
 
 public class BodyPainMed extends javax.swing.JFrame {
 
-    static String id, brandname, genericname, description, price, quantity;
+    private static String id, brandname, genericname, description, price, quantity;
     String type = "bodypain";
 
     public BodyPainMed() {
